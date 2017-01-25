@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="Down On Life">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="John Doe">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="网络编程-基本概念"/>
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="Down On Life" />
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="Color-Blind的笔记"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+    <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>网络编程-基本概念 - Color-Blind的笔记</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Google Analytics -->
+    
+
+
+</head>
+
+
+<body>
+
+<div class="bg-gradient"></div>
+<div class="bg-pattern"></div>
+
+<!-- Menu -->
+<!--Menu Links and Overlay-->
+<div class="menu-bg">
+    <div class="menu-container">
+        <ul>
+            
+            <li class="menu-item">
+                <a href="/">
+                    Home
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/archives">
+                    Archives
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+<!--Hamburger Icon-->
+<nav>
+    <a href="#menu"></a>
+</nav>
+
+<div class="container">
+
+    <!-- Main Content -->
+    <div class="row">
+    <div class="col-sm-12">
+
+        <!--Title and Logo-->
+        <header>
+    <div class="logo">
+        <a href="/"><i class="logo-icon fa fa-cube" aria-hidden="true"></i></a>
+        
+    </div>
+</header>
+
+        <section class="main">
+            
+<div class="post">
+
+    <div class="post-header">
+        <h1 class="title">
+            <a href="/2017/01/21/网络编程-基本概念/">
+                网络编程-基本概念
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2017-01-21</span>
+            
+            <a href="#disqus_thread" class="comments">留言</a>
+            
+        </div>
+    </div>
+
+    <div class="content">
+
+        <!-- Gallery -->
+        
+
+        <!-- Post Content -->
+        <h2 id="记录网络编程的基本概念"><a href="#记录网络编程的基本概念" class="headerlink" title="记录网络编程的基本概念"></a>记录网络编程的基本概念</h2><a id="more"></a>
+<p>笔记大部分内容来自<a href="https://book.douban.com/subject/1229899/" target="_blank" rel="external">《TCP/IP网络实验程序篇》</a>这本书前两章。<br>这本书含有大量的实用程序，可以帮助学习网络编程，而且书中代码可以免费下载。</p>
+<h4>1.关于分层寻址</h4>
+
+<p>应用层使用域名，传输层使用端口号，网络层使用IP地址，以太网层使用MAC。</p>
+<p>1.域名寻址，可以把/etc/hosts 文件理解成常用域名和IP对应的缓存文件，如果找不到，就去DNS服务器查找。<br>DNS服务器配置一般在/etc/resolv.conf 文件中。<br>2.进程寻址，服务名和端口号一般在/etc/services 文件中，记录的是常用服务名和端口号。<br>3.网络寻址，这个就比较复杂了，暂且略过。<br>4.物理寻址，一般是指ARP。</p>
+<h4>2.什么是socket?什么是端口?什么是网络地址?</h4>
+
+<p>socket是一个文件描述符(fd),如在Python交互式环境中:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> socket</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>s = socket.socket()</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>s</div><div class="line">&lt;socket._socketobject object at <span class="number">0xb749fe2c</span>&gt;</div></pre></td></tr></table></figure>
+<p>这样只是打开了一个文件描述符，和打开一个文件类似。</p>
+<p>做一个实验:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> socket</div><div class="line"><span class="keyword">import</span> time</div><div class="line"></div><div class="line">socks = []</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1000</span>):</div><div class="line">    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</div><div class="line">    socks.append(s)</div><div class="line"></div><div class="line"><span class="keyword">print</span> len(socks)</div><div class="line">time.sleep(<span class="number">120</span>)</div></pre></td></tr></table></figure>
+<p>运行以上脚本，打开1000个socket，观察netstat,发现打开的TCP端口并没有增加。</p>
+<p>端口是一个应用程序打开的虚拟接口(最多有65535个，如果分TCP和UDP，就是65535*2)，这个接口依赖socket。</p>
+<p>网络地址是IP地址+端口组成的地址。有了IP地址，可以找到主机，有了端口号，可以找到对应进程，从而进行通信。</p>
+<h4>3.关于端序</h4>
+
+<p>其实就是12345678里面12是放在前面还是后面的问题(为什么不能统一呢)。<br>使用Python获取本机的端序:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">3</span>]: <span class="keyword">import</span> sys</div><div class="line"></div><div class="line">In [<span class="number">4</span>]: sys.b</div><div class="line">sys.builtin_module_names  sys.byteorder             </div><div class="line"></div><div class="line">In [<span class="number">4</span>]: sys.byteorder</div><div class="line">Out[<span class="number">4</span>]: <span class="string">'little'</span></div></pre></td></tr></table></figure>
+<h4>4.关于以太网帧的说明</h4>
+
+<p>关于以太网帧的示例图如图1所示:</p>
+<p><img src="ethernet_1.png" alt="以太网帧示意图"></p>
+<center>图1</center> 
+
+<p>第一部分是以太网头(14个字节)，第二部分是上层协议所带的数据(46-1500个字节)，最后一部分是一个校验和(4个字节)。<br>那么以太网帧长度从(14+46+4=64 到 14+1500+4=1518 不等)</p>
+<p>以太网地址是6个字节的地址，在网卡出厂时已经固定，前三个字节(<a href="https://en.wikipedia.org/wiki/Organizationally_unique_identifier" target="_blank" rel="external">OUI</a>)用于表示网卡由哪个厂商制造。<br>OUI的列表在<a href="http://standards-oui.ieee.org/oui.txt" target="_blank" rel="external">这里</a>可以找到。</p>
+<p>在Linux系统的在/usr/include/net/ethernet.h文件中，包含了以太网头的定义：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/* 10Mb/s ethernet header */</span></div><div class="line"><span class="keyword">struct</span> ether_header</div><div class="line">&#123;</div><div class="line">  <span class="keyword">u_int8_t</span>  ether_dhost[ETH_ALEN];  <span class="comment">/* destination eth addr */</span></div><div class="line">  <span class="keyword">u_int8_t</span>  ether_shost[ETH_ALEN];  <span class="comment">/* source ether addr  */</span></div><div class="line">  <span class="keyword">u_int16_t</span> ether_type;           <span class="comment">/* packet type ID field */</span></div><div class="line">&#125; __attribute__ ((__packed__));</div><div class="line">其中 ETH_ALEN 在 /usr/include/linux/if_ether.h中定义如下：</div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> ETH_ALEN  6   <span class="comment">/* Octets in one ethernet addr   */</span></span></div></pre></td></tr></table></figure>
+<p>可以看出以太网头部，有源地址，目的地址(都是6个字节)和以太网类型3个字段。</p>
+<p>其中以太网类型包括以下几种:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">define</span> ETHERTYPE_PUP   0x0200      <span class="comment">/* Xerox PUP */</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> ETHERTYPE_SPRITE  0x0500    <span class="comment">/* Sprite */</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> ETHERTYPE_IP    0x0800    <span class="comment">/* IP */</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> ETHERTYPE_ARP   0x0806    <span class="comment">/* Address resolution */</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> ETHERTYPE_REVARP  0x8035    <span class="comment">/* Reverse ARP */</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> ETHERTYPE_AT    0x809B    <span class="comment">/* AppleTalk protocol */</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> ETHERTYPE_AARP    0x80F3    <span class="comment">/* AppleTalk ARP */</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> ETHERTYPE_VLAN    0x8100    <span class="comment">/* IEEE 802.1Q VLAN tagging */</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> ETHERTYPE_IPX   0x8137    <span class="comment">/* IPX */</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> ETHERTYPE_IPV6    0x86dd    <span class="comment">/* IP protocol version 6 */</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> ETHERTYPE_LOOPBACK  0x9000    <span class="comment">/* used to test interfaces */</span></span></div></pre></td></tr></table></figure><br>最常见的是ARP和IP。</p>
+<p>使用Python获取本机的MAC地址方法如下:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">import</span> uuid</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_mac</span><span class="params">()</span>:</span></div><div class="line">  mac_num = hex(uuid.getnode()).replace(<span class="string">'0x'</span>, <span class="string">''</span>).upper()</div><div class="line">  mac = <span class="string">'-'</span>.join(mac_num[i : i + <span class="number">2</span>] <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, <span class="number">11</span>, <span class="number">2</span>))</div><div class="line">  <span class="keyword">return</span> mac</div><div class="line"></div><div class="line"><span class="keyword">print</span> get_mac()</div><div class="line"></div></pre></td></tr></table></figure></p>
+<p>以太网帧不能穿过路由器，只能在局域网中存在，如果需要穿过路由器，需要经过IP层解包，加上新的以太网头才能出去。</p>
+<h4>5.关于ARP(不能叫做ARP协议了，因为ARP中的P就是协议的意思~)</h4>
+
+<p>ARP(Address Resolution Protocol)是一个根据IP地址寻找MAC地址的协议，一般用在局域网中。</p>
+<blockquote>
+<p>在以太网协议中规定，同一局域网中的一台主机要和另一台主机进行直接通信，必须要知道目标主机的MAC地址。而在TCP/IP协议<br>中，网络层和传输层只关心目标主机的IP地址。这就导致在以太网中使用IP协议时，数据链路层的以太网协议接到上层IP协议提供<br>的数据中，只包含目的主机的IP地址。于是需要一种方法，根据目的主机的IP地址，获得其MAC地址。这就是ARP协议要做的事情<br>。所谓地址解析（address resolution）就是主机在发送帧前将目标IP地址转换成目标MAC地址的过程。<br>另外，当发送主机和目的主机不在同一个局域网中时，即便知道目的主机的MAC地址，两者也不能直接通信，必须经过路由转发才<br>可以。所以此时，发送主机通过ARP协议获得的将不是目的主机的真实MAC地址，而是一台可以通往局域网外的路由器的MAC地址。<br>于是此后发送主机发往目的主机的所有帧，都将发往该路由器，通过它向外发送。这种情况称为ARP代理（ARP Proxy）。</p>
+</blockquote>
+<p>报文格式如图2</p>
+<p><img src="arp_packet.png" alt="arp_packet" width="900px"></p>
+<center>图2</center>
+
+<p>关于ARP协议的包定义可以在/usr/include/net/if_arp.h中查看:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> ARPOP_REQUEST 1   <span class="comment">/* ARP request.  */</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> ARPOP_REPLY 2   <span class="comment">/* ARP reply.  */</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> ARPOP_RREQUEST  3   <span class="comment">/* RARP request.  */</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> ARPOP_RREPLY  4   <span class="comment">/* RARP reply.  */</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> ARPOP_InREQUEST 8   <span class="comment">/* InARP request.  */</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> ARPOP_InREPLY 9   <span class="comment">/* InARP reply.  */</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> ARPOP_NAK 10    <span class="comment">/* (ATM)ARP NAK.  */</span></span></div><div class="line"></div><div class="line"><span class="comment">/* See RFC 826 for protocol description.  ARP packets are variable</span></div><div class="line">   in size; the arphdr structure defines the fixed-length portion.</div><div class="line">   Protocol type values are the same as those for 10 Mb/s Ethernet.</div><div class="line">   It is followed by the variable-sized fields ar_sha, arp_spa,</div><div class="line">   arp_tha and arp_tpa in that order, according to the lengths</div><div class="line">   specified.  Field names used correspond to RFC 826.  */</div><div class="line"></div><div class="line"><span class="keyword">struct</span> arphdr &#123;</div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="keyword">int</span> ar_hrd;    <span class="comment">/* Format of hardware address.  */</span></div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="keyword">int</span> ar_pro;    <span class="comment">/* Format of protocol address.  */</span></div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> ar_hln;   <span class="comment">/* Length of hardware address.  */</span></div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> ar_pln;   <span class="comment">/* Length of protocol address.  */</span></div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="keyword">int</span> ar_op;   <span class="comment">/* ARP opcode (command).  */</span></div><div class="line"><span class="meta">#<span class="meta-keyword">if</span> 0</span></div><div class="line">    <span class="comment">/* Ethernet looks like this : This bit is variable sized however...  */</span></div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> __ar_sha[ETH_ALEN]; <span class="comment">/* Sender hardware address.  */</span></div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> __ar_sip[<span class="number">4</span>];    <span class="comment">/* Sender IP address.  */</span></div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> __ar_tha[ETH_ALEN]; <span class="comment">/* Target hardware address.  */</span></div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> __ar_tip[<span class="number">4</span>];    <span class="comment">/* Target IP address.  */</span></div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>ARP解析过程如下:</p>
+<p>假定有A(192.168.10.104 MAC地址为80:00:27:49:84:68) 和 B(192.168.10.108 MAC地址为e8:4e:06:29:6d:6d)在用同一个局域网，需要通信。</p>
+<p><em>1.A先查找ARP缓存，发现没有找到B的MAC地址缓存；</em><br><em>2.A发送ARP广播查询请求，对局域网内的所有主机广播，内容是192.168.10.108的主机，回答我你的MAC地址；</em><br><em>3.主机B收到ARP请求后，回答了A，并更新自己的ARP缓存，其他主机则不会响应A的询问；</em><br><em>4.当主机A收到了B的回复后，更新自己的ARP缓存。</em></p>
+<p>使用实际的网络包查看过程：</p>
+<p>先看下A(192.168.10.104)的ARP缓存<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">arp -a</div><div class="line">? (192.168.10.103) 位于 80:e6:50:08:19:66 [ether] 在 eth0</div><div class="line">? (192.168.10.106) 位于 c8:1e:e7:a1:3c:ab [ether] 在 eth0</div><div class="line">? (192.168.10.1) 位于 d0:c7:c0:0b:cb:4a [ether] 在 eth0</div></pre></td></tr></table></figure></p>
+<p>没有B主机的信息。<br>我们先ping一下B，在ping之前会发ARP请求:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">ping 192.168.10.108</div><div class="line">PING 192.168.10.108 (192.168.10.108) 56(84) bytes of data.</div><div class="line">64 bytes from 192.168.10.108: icmp_seq=1 ttl=128 time=1165 ms</div><div class="line">64 bytes from 192.168.10.108: icmp_seq=2 ttl=128 time=156 ms</div><div class="line">64 bytes from 192.168.10.108: icmp_seq=3 ttl=128 time=104 ms</div><div class="line">64 bytes from 192.168.10.108: icmp_seq=4 ttl=128 time=499 ms</div><div class="line">64 bytes from 192.168.10.108: icmp_seq=5 ttl=128 time=103 ms</div><div class="line">64 bytes from 192.168.10.108: icmp_seq=6 ttl=128 time=4.33 ms</div><div class="line">^C</div><div class="line">--- 192.168.10.108 ping statistics ---</div><div class="line">6 packets transmitted, 6 received, 0% packet loss, time 5015ms</div></pre></td></tr></table></figure></p>
+<p>现在再看A的ARP缓存:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">arp -a</div><div class="line">? (192.168.10.103) 位于 80:e6:50:08:19:66 [ether] 在 eth0</div><div class="line">? (192.168.10.108) 位于 e8:4e:06:29:6d:6d [ether] 在 eth0</div><div class="line">? (192.168.10.106) 位于 c8:1e:e7:a1:3c:ab [ether] 在 eth0</div><div class="line">? (192.168.10.1) 位于 d0:c7:c0:0b:cb:4a [ether] 在 eth0</div></pre></td></tr></table></figure>
+<p>这时候B的信息就加入A的缓存了。</p>
+<p>把整个过程抓包看下数据包:</p>
+<p><img src="arp1.png" alt="arp过程" title="arp过程" height="300px"></p>
+<center>图3</center><br>在ping之前会有ARP request，就是第13个包，如图4:<br><img src="arp_request.png" alt="arp 请求" height="300px"><br><center>图4</center><br>这里的广播地址是FF:FF:FF:FF:FF:FF，意思就是我是A(192.168.10.104)，问问大家，如果你的IP是192.168.10.108，赶紧告诉我你的MAC地址。<br><br>然后第14个包，是B(192.168.10.108)的回答，如图5:<br><img src="arp_answer.png" alt="arp响应" ,="" height="300px"><br><center>图5</center> 
+
+<p>B收到请求后的reply，告诉A(192.168.10.104)，我是B(192.168.10.108)，我的MAC地址是e8:4e:06:29:6d:6d，然后A把B的IP和MAC做一个缓冲到A的主机中，这样就可以通信了。</p>
+
+    </div>
+
+    
+
+    
+        <div class="post-tags">
+            <i class="fa fa-tags" aria-hidden="true"></i>
+            <a href="/tags/NetWork/">#NetWork</a>
+        </div>
+    
+
+    <!-- Comments -->
+    
+
+</div>
+        </section>
+
+    </div>
+</div>
+
+</div>
+
+<!-- Footer -->
+<div class="push"></div>
+
+<footer class="footer-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 footer-about">
+                <h2>About</h2>
+                <p>
+                    主题由 <a href="https://github.com/klugjo">Jonathan Klughertz</a> 开发设计
+                </p>
+            </div>
+            
+    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 recent-posts">
+        <h2>Recent Posts</h2>
+        <ul>
+            
+            <li>
+                <a class="footer-post" href="/2017/01/25/体验Tcl语言/">体验Tcl语言</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2017/01/21/网络编程-基本概念/">网络编程-基本概念</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2017/01/08/LeetCode-Count-and-say/">LeetCode_Count_and_say</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2016/12/30/Hello-World/">Hello_World</a>
+            </li>
+            
+        </ul>
+    </div>
+
+
+
+            
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <ul class="list-inline footer-social-icons">
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="footer-copyright">
+                    由 Hexo <a href="http://www.codeblocq.com/">Jonathan Klughertz</a> 强力驱动
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- After footer scripts -->
+
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Tween Max -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenMax.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Custom JavaScript -->
+<script src="/js/main.js"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>

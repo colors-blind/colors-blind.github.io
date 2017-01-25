@@ -20,7 +20,7 @@
 
     <!--Open Graph Title-->
     
-        <meta property="og:title" content="Color-Blind的笔记"/>
+        <meta property="og:title" content="体验Tcl语言"/>
     
 
     <!--Open Graph Description-->
@@ -33,7 +33,7 @@
 
     <!--Type page-->
     
-        <meta property="og:type" content="website" />
+        <meta property="og:type" content="article" />
     
 
     <!--Page Cover-->
@@ -44,7 +44,7 @@
 
     <!-- Title -->
     
-    <title>Color-Blind的笔记</title>
+    <title>体验Tcl语言 - Color-Blind的笔记</title>
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
@@ -115,17 +115,14 @@
     <div class="logo">
         <a href="/"><i class="logo-icon fa fa-cube" aria-hidden="true"></i></a>
         
-            <h1 id="main-title" class="title">Color-Blind的笔记</h1>
-        
     </div>
 </header>
 
         <section class="main">
             
-                
 <div class="post">
 
-    <div class="post-header index">
+    <div class="post-header">
         <h1 class="title">
             <a href="/2017/01/25/体验Tcl语言/">
                 体验Tcl语言
@@ -135,14 +132,18 @@
             
                 <span class="date">2017-01-25</span>
             
-            
+            <a href="#disqus_thread" class="comments">留言</a>
             
         </div>
     </div>
 
-    
-        <div class="content">
-            <hr>
+    <div class="content">
+
+        <!-- Gallery -->
+        
+
+        <!-- Post Content -->
+        <hr>
 <h2 id="Tcl脚本初体验"><a href="#Tcl脚本初体验" class="headerlink" title="Tcl脚本初体验"></a>Tcl脚本初体验</h2><p>Tcl（发音 tickle）是一种脚本语言。学习它的目的在于有本书上有这个语言的代码。但是过于老旧，无法运行了，想要自己修改下。:)</p>
 <h4>Tcl 的特性包括：</h4>
 
@@ -172,101 +173,25 @@
 <figure class="highlight tcl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/bin/sh</span></div><div class="line"><span class="comment">#Tcl ingores the next line but 'sh' doesn't \</span></div><div class="line"><span class="keyword">exec</span> tclsh <span class="string">"$0"</span> <span class="string">"$@"</span></div><div class="line"></div><div class="line"><span class="comment"># 输出表达式的值</span></div><div class="line"><span class="keyword">puts</span> [<span class="keyword">expr</span> sin(<span class="number">10</span>)]</div><div class="line"></div><div class="line"><span class="comment"># 定义变量num</span></div><div class="line"><span class="keyword">set</span> num <span class="number">11111</span></div><div class="line"><span class="keyword">puts</span> <span class="string">"num is $num"</span></div><div class="line"></div><div class="line"><span class="keyword">puts</span> [<span class="keyword">expr</span> $num % <span class="number">8</span>]</div><div class="line"></div><div class="line"><span class="comment"># index from 0</span></div><div class="line"><span class="keyword">puts</span> [<span class="keyword">lindex</span> &#123;red blue pink&#125; <span class="number">2</span>]</div><div class="line"></div><div class="line"><span class="keyword">set</span> length [<span class="keyword">string</span> length aaaaaaabbbbbb]</div><div class="line"><span class="keyword">puts</span> <span class="string">"length is $length"</span></div><div class="line"></div><div class="line"><span class="comment"># 变量替换</span></div><div class="line"><span class="keyword">set</span> a <span class="number">1</span></div><div class="line"><span class="keyword">set</span> b <span class="number">2</span></div><div class="line"><span class="keyword">puts</span> <span class="string">"$a+$b = [expr $a+$b]"</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># 字符串中使用双引号</span></div><div class="line"><span class="keyword">set</span> name a.out</div><div class="line"><span class="keyword">set</span> msg <span class="string">"Counldn't open file \"$name\""</span></div><div class="line"><span class="keyword">puts</span> $msg</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># 使用&#123;&#125;不转义$符号</span></div><div class="line"><span class="keyword">set</span> msg &#123;Eggs: $<span class="number">2.18</span>/dozen Apple: $<span class="number">3.09</span>/dozen&#125;</div><div class="line"><span class="keyword">puts</span> $msg</div><div class="line"></div><div class="line"><span class="keyword">proc</span><span class="title"> counter</span> &#123;value <span class="keyword">list</span>&#125; &#123;</div><div class="line">    <span class="keyword">set</span> count <span class="number">0</span> </div><div class="line">    <span class="keyword">foreach</span> el $list &#123;</div><div class="line">        <span class="keyword">if</span> $el==$value &#123;</div><div class="line">            <span class="keyword">incr</span> count</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> $count</div><div class="line">&#125;</div><div class="line"><span class="comment"># 调用counter函数</span></div><div class="line"><span class="keyword">puts</span> [counter <span class="number">1</span> &#123;<span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">4</span> <span class="number">5</span> <span class="number">6</span> <span class="number">1</span> <span class="number">1</span> &#125;]</div><div class="line"><span class="comment"># glob函数</span></div><div class="line"><span class="keyword">puts</span> [<span class="keyword">glob</span> *.tcl]</div><div class="line"></div><div class="line"><span class="comment"># format 函数</span></div><div class="line"><span class="keyword">set</span> name color_blind</div><div class="line"><span class="keyword">set</span> greet [<span class="keyword">format</span> &#123;<span class="string">"%s"</span> said: hello world!&#125; $name]</div><div class="line"><span class="keyword">puts</span> $greet</div><div class="line"></div><div class="line"><span class="keyword">set</span> city <span class="string">"Los Angeles"</span></div><div class="line"><span class="keyword">set</span> bigcity $city</div><div class="line"><span class="keyword">puts</span> $city</div><div class="line"></div></pre></td></tr></table></figure>
 <p>运行结果:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">-0.5440211108893699</div><div class="line">num is 11111</div><div class="line">7</div><div class="line">pink</div><div class="line">length is 13</div><div class="line">1+2 = 3</div><div class="line">Counldn&apos;t open file &quot;a.out&quot;</div><div class="line">Eggs: $2.18/dozen Apple: $3.09/dozen</div><div class="line">3</div><div class="line">clock.tcl echo_server.tcl factorial.tcl get_pos.tcl gui_factorial.tcl hello.tcl style_button.tcl try.tcl var_example.tcl</div><div class="line">&quot;color_blind&quot; said: hello world!</div><div class="line">Los Angeles</div></pre></td></tr></table></figure></p>
 
-        </div>
-    
-
-</div>
-            
-                
-<div class="post">
-
-    <div class="post-header index">
-        <h1 class="title">
-            <a href="/2017/01/21/网络编程-基本概念/">
-                网络编程-基本概念
-            </a>
-        </h1>
-        <div class="post-info">
-            
-                <span class="date">2017-01-21</span>
-            
-            
-            
-        </div>
     </div>
 
     
-        <div class="content">
-            <h2 id="记录网络编程的基本概念"><a href="#记录网络编程的基本概念" class="headerlink" title="记录网络编程的基本概念"></a>记录网络编程的基本概念</h2>
+
+    
+        <div class="post-tags">
+            <i class="fa fa-tags" aria-hidden="true"></i>
+            <a href="/tags/Tcl/">#Tcl</a>
         </div>
-        <a href="/2017/01/21/网络编程-基本概念/" class="read-more">Read More</a>
+    
+
+    <!-- Comments -->
     
 
 </div>
-            
-                
-<div class="post">
-
-    <div class="post-header index">
-        <h1 class="title">
-            <a href="/2017/01/08/LeetCode-Count-and-say/">
-                LeetCode_Count_and_say
-            </a>
-        </h1>
-        <div class="post-info">
-            
-                <span class="date">2017-01-08</span>
-            
-            
-            
-        </div>
-    </div>
-
-    
-        <div class="content">
-            <h2 id="LeetCode-count-and-say问题"><a href="#LeetCode-count-and-say问题" class="headerlink" title="LeetCode count and say问题"></a>LeetCode count and say问题</h2>
-        </div>
-        <a href="/2017/01/08/LeetCode-Count-and-say/" class="read-more">Read More</a>
-    
-
-</div>
-            
-                
-<div class="post">
-
-    <div class="post-header index">
-        <h1 class="title">
-            <a href="/2016/12/30/Hello-World/">
-                Hello_World
-            </a>
-        </h1>
-        <div class="post-info">
-            
-                <span class="date">2016-12-30</span>
-            
-            
-            
-        </div>
-    </div>
-
-    
-        <div class="content">
-            <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#coding=utf-8</span></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    print(<span class="string">"Hello world!"</span>)</div><div class="line"></div></pre></td></tr></table></figure>
-<img src="/2016/12/30/Hello-World/hello_world.jpg" alt="This is an example image" title="This is an example image">
-
-        </div>
-    
-
-</div>
-            
         </section>
+
     </div>
 </div>
-
-
-
-
-
 
 </div>
 
