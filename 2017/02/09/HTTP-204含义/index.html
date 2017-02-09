@@ -20,7 +20,7 @@
 
     <!--Open Graph Title-->
     
-        <meta property="og:title" content="Color-Blind的笔记"/>
+        <meta property="og:title" content="HTTP 204响应码"/>
     
 
     <!--Open Graph Description-->
@@ -33,7 +33,7 @@
 
     <!--Type page-->
     
-        <meta property="og:type" content="website" />
+        <meta property="og:type" content="article" />
     
 
     <!--Page Cover-->
@@ -44,7 +44,7 @@
 
     <!-- Title -->
     
-    <title>NetWork - Color-Blind的笔记</title>
+    <title>HTTP 204响应码 - Color-Blind的笔记</title>
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
@@ -107,9 +107,7 @@
 <div class="container">
 
     <!-- Main Content -->
-    
-
-<div class="row">
+    <div class="row">
     <div class="col-sm-12">
 
         <!--Title and Logo-->
@@ -117,23 +115,71 @@
     <div class="logo">
         <a href="/"><i class="logo-icon fa fa-cube" aria-hidden="true"></i></a>
         
-            <h1 id="main-title" class="title">#NetWork</h1>
-        
     </div>
 </header>
 
-        <section class="main archive-container">
+        <section class="main">
             
-                <div class="archive-post">
-    <a href="/2017/01/21/网络编程-基本概念/">
-        <span class="archive-date">
-            Jan 2017
-        </span>
-        网络编程-基本概念
-    </a>
+<div class="post">
+
+    <div class="post-header">
+        <h1 class="title">
+            <a href="/2017/02/09/HTTP-204含义/">
+                HTTP 204响应码
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2017-02-09</span>
+            
+            <a href="#disqus_thread" class="comments">留言</a>
+            
+        </div>
+    </div>
+
+    <div class="content">
+
+        <!-- Gallery -->
+        
+
+        <!-- Post Content -->
+        <h2 id="HTTP-204响应码含义"><a href="#HTTP-204响应码含义" class="headerlink" title="HTTP 204响应码含义"></a>HTTP 204响应码含义</h2><a id="more"></a>
+<p>在读《CORS In Action》时候，作者设计DELETE API时候给出一个HTTP 204的返回码，没有接触过204 No Content，<br>搜索记录下：</p>
+<blockquote>
+<p>For a PUT request: HTTP 200 or HTTP 204 should imply “resource updated successfully”.</p>
+</blockquote>
+<p>对于PUT请求: 200或者204说明了 “资源更新已成功”。</p>
+<blockquote>
+<p>For a DELETE request: HTTP 200 or HTTP 204 should imply “resource deleted successfully”.</p>
+</blockquote>
+<p>对于DELETE请求：200或者204说明了 “资源删除已成功”</p>
+<p>那么200和204有何区别呢？<br>维基百科描述204如下：</p>
+<blockquote>
+<p>服务器成功处理了请求，但不需要返回任何实体内容，并且希望返回更新了的元信息。响应可能通过实体头部的形式，返回新的或更新后的元信息。如果存在这些头部信息，则应当与所请求的变量相呼应。<br>如果客户端是浏览器的话，那么用户浏览器应保留发送了该请求的页面，而不产生任何文档视图上的变化，即使按照规范新的或更新后的元信息应当被应用到用户浏览器活动视图中的文档。<br>由于204响应被禁止包含任何消息体，因此它始终以消息头后的第一个空行结尾。</p>
+</blockquote>
+<p>可以看出204表示，资源已经删除了，但是不需要给出明确的返回信息，仅仅以HTTP响应码的方式告诉你。<br>如果客户端是浏览器，那么不会进行重定向等操作。</p>
+<p>这样做的好处在于减少了响应内容，节省了流量，不过由于没有返回内容，可能会给用户带来困惑。</p>
+<p>204响应的实例如下：</p>
+<p><img src="204.png" alt="204 code"></p>
+<p>参考:<br><a href="http://stackoverflow.com/questions/2342579/http-status-code-for-update-and-delete" target="_blank" rel="external">http://stackoverflow.com/questions/2342579/http-status-code-for-update-and-delete</a><br><a href="https://zh.wikipedia.org/wiki/HTTP%E7%8A%B6%E6%80%81%E7%A0%81" target="_blank" rel="external">https://zh.wikipedia.org/wiki/HTTP%E7%8A%B6%E6%80%81%E7%A0%81</a><br><a href="http://www.laruence.com/2011/01/20/1844.html" target="_blank" rel="external">http://www.laruence.com/2011/01/20/1844.html</a></p>
+
+    </div>
+
+    
+
+    
+        <div class="post-tags">
+            <i class="fa fa-tags" aria-hidden="true"></i>
+            <a href="/tags/HTTP/">#HTTP</a>
+        </div>
+    
+
+    <!-- Comments -->
+    
+
 </div>
-            
         </section>
+
     </div>
 </div>
 

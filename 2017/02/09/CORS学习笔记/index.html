@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="Down On Life">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="John Doe">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="CORS入门笔记"/>
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="Down On Life" />
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="Color-Blind的笔记"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+    <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>CORS入门笔记 - Color-Blind的笔记</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Google Analytics -->
+    
+
+
+</head>
+
+
+<body>
+
+<div class="bg-gradient"></div>
+<div class="bg-pattern"></div>
+
+<!-- Menu -->
+<!--Menu Links and Overlay-->
+<div class="menu-bg">
+    <div class="menu-container">
+        <ul>
+            
+            <li class="menu-item">
+                <a href="/">
+                    Home
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/archives">
+                    Archives
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+<!--Hamburger Icon-->
+<nav>
+    <a href="#menu"></a>
+</nav>
+
+<div class="container">
+
+    <!-- Main Content -->
+    <div class="row">
+    <div class="col-sm-12">
+
+        <!--Title and Logo-->
+        <header>
+    <div class="logo">
+        <a href="/"><i class="logo-icon fa fa-cube" aria-hidden="true"></i></a>
+        
+    </div>
+</header>
+
+        <section class="main">
+            
+<div class="post">
+
+    <div class="post-header">
+        <h1 class="title">
+            <a href="/2017/02/09/CORS学习笔记/">
+                CORS入门笔记
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2017-02-09</span>
+            
+            <a href="#disqus_thread" class="comments">留言</a>
+            
+        </div>
+    </div>
+
+    <div class="content">
+
+        <!-- Gallery -->
+        
+
+        <!-- Post Content -->
+        <hr>
+<h2 id="CORS-In-Action阅读笔记"><a href="#CORS-In-Action阅读笔记" class="headerlink" title="CORS In Action阅读笔记"></a>CORS In Action阅读笔记</h2><a id="more"></a>
+<p>CORS(Cross-Origin Resource Sharing)是一种跨域技术，简单的说，就是在浏览器中，A网站是否可以对B网站发起HTTP请求。<br><a href="https://book.douban.com/subject/26256733/" target="_blank" rel="external">CORS In Action</a>这本书对CORS做了详细的介绍。</p>
+<h4>Hello CORS!</h4>
+
+<blockquote>
+<p>CORS is simply a way of making HTTP requests from one place to another. This is a<br>trivial thing in other programming languages. But it’s difficult to do in client-side<br>JavaScript, because for years the browser’s same-origin policy has explicitly prevented<br>these types of requests. </p>
+</blockquote>
+<p>CORS是一种简单的跨域请求方法。对于其他语言来说(比如Python，Java)是很容易的。但是对于客户端的JavaScript<br>语言是很困难的，因为浏览器的同源策略会明确阻止这种请求。</p>
+<p>这句话是什么意思呢？</p>
+<p>比如有一个简单的存储接口是这样的:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#coding=utf-8</span></div><div class="line"><span class="keyword">from</span> bottle <span class="keyword">import</span> post, run</div><div class="line"></div><div class="line"><span class="meta">@post('/save')</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">save_name</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">return</span> <span class="string">'hello'</span></div><div class="line"></div><div class="line">run(host=<span class="string">'localhost'</span>, port=<span class="number">8080</span>)</div></pre></td></tr></table></figure>
+<p>用以下的Python代码很简单就能访问的:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#coding=utf-8</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> requests</div><div class="line"></div><div class="line">url = <span class="string">'http://localhost:8080/save'</span></div><div class="line"></div><div class="line">resp = requests.post(url=url)</div><div class="line"><span class="keyword">print</span> resp.text</div></pre></td></tr></table></figure>
+<p>但是如果在浏览器中，不同于localhost:8080这个域，使用ajax请求 就会报错:</p>
+<p><img src="error.png" alt="浏览器跨域失败"></p>
+<p>说明浏览器中的跨域ajax请求是失败的。</p>
+<p>CORS的原理在于，对目标网站进行请求时候，会加上特定的HTTP请求头，从而让跨域请求在浏览器中变得合法。</p>
+<p>请求过程如下（图片来自原书）:</p>
+<p><img src="process.png" alt="CORS过程"></p>
+<p>1.CORS请求由浏览器中的JavaScript代码产生；<br>2.浏览器在请求前加入额外的HTTP请求头；<br>3.服务端校验跨域请求是否合法；<br>4.如果请求允许，浏览器把响应发给客户端JavaScript代码。</p>
+<p>注意，这里被拦截的原因是浏览器的安全策略，实际的请求是发给了服务端的，我们在服务端是可以看到有请求过来。<br>但是console中显示的错误，是因为浏览器拦截了，通过WireShark也能看出，响应已经发回去了：</p>
+<p><img src="response.png" alt="服务端响应"></p>
+<p>一个CORS请求的实例(跨域访问Flickr的API得到图片)：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">onload</span>=<span class="string">"loadPhotos();"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"photos"</span>&gt;</span>Loading photos...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="xml"></span></div><div class="line">function loadPhotos() &#123;</div><div class="line">  var api_key = '9931ec9f35941c37b259a0752a884224';</div><div class="line">  var method = 'GET';</div><div class="line">  var url = 'https://api.flickr.com/services/rest/?' +</div><div class="line">      'method=flickr.people.getPublicPhotos&amp;' +</div><div class="line">      'user_id=32951986%40N05&amp;' +</div><div class="line">      'extras=url_q&amp;format=json&amp;nojsoncallback=1&amp;' +</div><div class="line">      'api_key=' + api_key;</div><div class="line"></div><div class="line">  var xhr = new XMLHttpRequest();</div><div class="line"></div><div class="line">  xhr.open(method, url);</div><div class="line"></div><div class="line">  xhr.onerror = function() &#123;</div><div class="line">    alert('There was an error.');</div><div class="line">  &#125;;</div><div class="line"></div><div class="line">  xhr.onload = function() &#123;</div><div class="line">    var data = JSON.parse(xhr.responseText);</div><div class="line">    if (data.stat == 'ok') &#123;</div><div class="line">      var photosDiv = document.getElementById('photos');</div><div class="line">      photosDiv.innerHTML = '';</div><div class="line">      var photos = data.photos.photo;</div><div class="line"></div><div class="line">      // 设置图片路径</div><div class="line">      for (var i = 0; i <span class="tag">&lt; <span class="attr">photos.length</span>; <span class="attr">i</span>++) &#123;</span></div><div class="line">        <span class="attr">var</span> <span class="attr">img</span> = <span class="string">document.createElement(</span>'<span class="attr">img</span>');</div><div class="line">        <span class="attr">img.src</span> = <span class="string">photos[i].url_q;</span></div><div class="line">        <span class="attr">photosDiv.appendChild</span>(<span class="attr">img</span>);</div><div class="line">      &#125;</div><div class="line">    &#125; <span class="attr">else</span> &#123;</div><div class="line">      <span class="attr">alert</span>(<span class="attr">data.message</span>);</div><div class="line">    &#125;</div><div class="line">  &#125;;</div><div class="line"></div><div class="line">  <span class="attr">xhr.send</span>();</div><div class="line">&#125;</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>响应头如下:</p>
+<p><img src="cors_response.png" alt="CORS响应头实例"></p>
+<p>请求头如下:</p>
+<p><img src="cors_request.png" alt="CORS请求头"></p>
+<p>单个图片响应头如下:</p>
+<p><img src="pic_response.png" alt="CORS响应头实例"><br>可以看出 响应头 中带有 Access-Control-Allow-Origin 字段，表示跨域请求允许的域名。</p>
+<p>上面的实例可以看出CORS的基本用法，那么CORS有什么好处呢？</p>
+<p>1.实现浏览器跨域访问资源；<br>2.限制由服务端负责，允许何种请求，允许谁请求，都由服务端决定，安全性好；<br>3.灵活性好，可以通过配置来决定哪些请求合法；<br>4.对开发者简单，使用XMLHttpRequest对象；</p>
+<p>下面来了解下实例代码所涉及的Ajax知识。</p>
+<p>1.setRequestHeader函数</p>
+<p>使用setRequestHeader函数，可以给XMLHttpRequest对象添加HTTP请求头，使用方法如：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">// 实例来自 http://www.w3school.com.cn/tiy/t.asp?f=ajax_post2</div><div class="line">xmlhttp.open("POST","/ajax/demo_post2.asp",true);</div><div class="line">xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");</div><div class="line">xmlhttp.send("fname=Bill&amp;lname=Gates");</div><div class="line"></div></pre></td></tr></table></figure>
+<p>使用需要在open函数之后，send函数之前，不然会报错:<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Uncaught DOMException: Failed to execute 'setRequestHeader' on 'XMLHttpRequest': The object's state must be OPENED.</div></pre></td></tr></table></figure></p>
+<p>有特殊含义的请求头添加是无效的，即使添加上，也会被忽略:</p>
+<blockquote>
+<p>Here is the list of headers that cannot be set by the setRequestHeader method:<br>Accept-Charset, Accept-Encoding, Access-Control-Request-Headers, Access-ControlRequest-Method,<br>Connection, Content-Length, Cookie, Cookie2, Date, DNT, Expect,<br>Host, Keep-Alive, Origin, Referer, TE, Trailer, Transfer-Encoding, Upgrade, User-Agent,<br>Via, and any headers starting with ‘Proxy-’ or ‘Sec-’.<br>These headers have special meaning and can only be set by the browser. There is no<br>error if the code tries to set the header. The value is just ignored.</p>
+</blockquote>
+<ul>
+<li>Accept-Charset</li>
+<li>Accept-Encoding</li>
+<li>Access-Control-Request-Headers</li>
+<li>Access-ControlRequest-Method,</li>
+<li>Connection</li>
+<li>Content-Length</li>
+<li>Cookie</li>
+<li>Cookie2</li>
+<li>Date</li>
+<li>DNT</li>
+<li>Expect</li>
+<li>Host</li>
+<li>Keep-Alive</li>
+<li>Origin</li>
+<li>Referer</li>
+<li>TE</li>
+<li>Trailer</li>
+<li>Transfer-Encoding</li>
+<li>Upgrade</li>
+<li>User-Agent</li>
+<li>Via</li>
+<li>Proxy-*</li>
+<li>Sec-*</li>
+</ul>
+<p>这些HTTP请求头有着特殊的含义，只能由浏览器本身添加，即便在代码中添加，也不会生效。</p>
+<p>2.timeout参数</p>
+<blockquote>
+<p>Once the send method is called, the HTTP request is sent to the server. Even though<br>the request has been sent, there are still a couple of ways to cancel the request. First, the<br>timeout property can be used to ensure that the request doesn’t exceed a certain<br>number of milliseconds. Setting the timeout property to 10000 will kill the request<br>after 10 seconds. The default value for the timeout property is 0, which means there is<br>no timeout, and the request will continue until the server responds. Second, the client<br>can manually kill the request by using the abort method. Calling the abort method<br>will abort the request immediately. </p>
+</blockquote>
+<p>一旦调用send方法，HTTP请求会发给服务端。即使请求发送了，还是有一些方法取消请求。<br>第一种方法是timeout属性，可以设置为若干毫秒，超过这个数字，就会超时。<br>设置timeout为10000会在10秒后取消请求。默认的timeout值为0，表示没有超时时间，会一直等到服务器响应。<br>第二种方法是使用abort方法，调用abort方法会直接终止请求。</p>
+<p>3.异步和同步请求</p>
+<blockquote>
+<p>By default, the XMLHttpRequest object makes asynchronous requests. This means<br>that the send method makes the request in the background, and fires events when<br>the status of the request changes. The XMLHttpRequest object can also make synchronous<br>requests. In a synchronous request, the send method will wait until the<br>response is received (or an error is encountered).</p>
+</blockquote>
+<p>默认情况下，XMLHttpRequest对象发送异步请求。这意味着，send函数发送的请求在后台，根据请求状态的改变<br>来触发事件。XMLHttpRequest对象也能被设置为同步请求。在同步请求中，send方法会在响应(或者错误)到来前等待。</p>
+<p>使用同步请求的话，页面会在服务端响应前阻塞住，所以需要尽可能避免使用同步请求。</p>
+<p>4.XMLHttpRequest对象的事件处理函数表</p>
+<table>
+<thead>
+<tr>
+<th>事件名称</th>
+<th>说明 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>onloadstart</td>
+<td>Fires when the request starts.</td>
+<td></td>
+</tr>
+<tr>
+<td>onprogress</td>
+<td>Fires when sending and loading data.</td>
+<td></td>
+</tr>
+<tr>
+<td>onabort</td>
+<td>Fires when the request has been aborted by calling the abort method.</td>
+<td></td>
+</tr>
+<tr>
+<td>onerror</td>
+<td>Fires when the request has failed.</td>
+<td></td>
+</tr>
+<tr>
+<td>onload</td>
+<td>Fires when the request has successfully completed.</td>
+<td></td>
+</tr>
+<tr>
+<td>ontimeout</td>
+<td>Fires when the timeout has been exceeded (if the client code specified a timeout value).</td>
+<td></td>
+</tr>
+<tr>
+<td>onloadend</td>
+<td>Fires when the request has completed, regardless of whether there was an error or not.</td>
+<td></td>
+</tr>
+<tr>
+<td>onreadystatechange</td>
+<td>Legacy handler from the previous version of XMLHttpRequest; fires when legacy readyState property changes. It is superseded by other events and is only useful for non-tier 1 browsers.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>有些事件可能只会触发一次，有些可能触发多次，如下图，来自原书。</p>
+<p><img src="ajax_event.png" alt="ajax请求"></p>
+<p>5.XMLHttpRequest响应对象的属性表</p>
+<table>
+<thead>
+<tr>
+<th>属性名称</th>
+<th>说明 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>status</td>
+<td>The HTTP status code (for example, 200 for a successful request).</td>
+<td></td>
+</tr>
+<tr>
+<td>statusText</td>
+<td>The response string returned by the server (for example, OK for a successful request).</td>
+<td></td>
+</tr>
+<tr>
+<td>response</td>
+<td>The body of the response, in the format defined by responseType. If the client indicated that the response type is json, the response will be a JSON object parsed from the response body.</td>
+<td></td>
+</tr>
+<tr>
+<td>responseText</td>
+<td>The body of the response as a string. Can only be used if responseType was not set or was set as text.</td>
+<td></td>
+</tr>
+<tr>
+<td>responseXML</td>
+<td>The body of the response as a DOM element (XML is here for historical reasons). Can only be used if responseType was not set or was set as document.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>getResponseHeader函数和getAllResponseHeaders函数可以读取响应的返回头。<br>默认情况下，CORS请求可以读取以下的响应头:</p>
+<p>■ Cache-Control<br>■ Content-Language<br>■ Content-Type<br>■ Expires<br>■ Last-Modified<br>■ Pragma</p>
+<p>6.CORS 和 Cookie</p>
+<blockquote>
+<p>Same-origin HTTP requests will always contain the cookie in the<br>request. In contrast, cross-origin requests don’t include cookies by default.</p>
+</blockquote>
+<p>同源的HTTP请求一般都会带上cookie请求。不同的是，跨域请求默认不会包括cookie。</p>
+<p>可以通过设置XMLHttpRequest对象的withCredentials属性来加上cookie。<br>不过加上这一行也可能导致请求失败:</p>
+<p>xhr.withCredentials = true;</p>
+<p>需要服务端明确表示允许带有cookie请求。</p>
+<p>注意： withCredentials 在同步模式下无法使用。</p>
+<p>7.使用Jquery进行跨域请求</p>
+<p>实例如下:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">onload</span>=<span class="string">"loadPhotos();"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"photos"</span>&gt;</span>Loading photos...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/</span></span></div><div class="line">jquery.min.js"&gt;<span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="xml"></span></div><div class="line">function loadPhotos() &#123;</div><div class="line">  var api_key = '9931ec9f35941c37b259a0752a884224';</div><div class="line">  var method = 'GET';</div><div class="line">  var url = 'https://api.flickr.com/services/rest/?' +</div><div class="line">      'method=flickr.people.getPublicPhotos&amp;' +</div><div class="line">      'user_id=32951986%40N05&amp;' +</div><div class="line">      'extras=url_q&amp;format=json&amp;nojsoncallback=1&amp;' +</div><div class="line">      'api_key=' + api_key;</div><div class="line"></div><div class="line">  $.ajax(url, &#123;</div><div class="line">    type: method,</div><div class="line">    dataType: 'json',</div><div class="line"></div><div class="line">    succuess: function(data, textStatus, jqXHR) &#123;</div><div class="line">      if (data.stat == 'ok') &#123;</div><div class="line">        $("#photos").empty();</div><div class="line">        $.each(data.photos.photo, function(i, photo) &#123;</div><div class="line">            var img = $('<span class="tag">&lt;<span class="name">img</span>&gt;</span>').attr('src', photo.url_q);</div><div class="line">            $('#photos').append(img);</div><div class="line">        &#125;);</div><div class="line">      &#125; else &#123;</div><div class="line">        alert(data.message);</div><div class="line">      &#125;</div><div class="line">    &#125;,</div><div class="line"></div><div class="line">    error: function(jqXHR, textStatus, errorThrown) &#123;</div><div class="line">      alert('There was an error.');</div><div class="line">    &#125;</div><div class="line"></div><div class="line">  &#125;);</div><div class="line"></div><div class="line">  </div><div class="line">&#125;</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<h4>在服务端配置CORS</h4><br>CORS In Action使用<a href="https://nodejs.org/zh-cn/" target="_blank" rel="external">Node.js</a>和<a href="http://expressjs.com/zh-cn/starter/installing.html" target="_blank" rel="external">Express</a>框架来举例，如何配置服务端CORS。<br><br>一个简单的API实例:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">var express = require(<span class="string">'express'</span>); <span class="comment">// 引入express框架</span></div><div class="line"></div><div class="line"><span class="comment">// 数据</span></div><div class="line">var POSTS = &#123;</div><div class="line"> <span class="string">'1'</span>: &#123;<span class="string">'post'</span>: <span class="string">'This is the first blog post.'</span>&#125;,</div><div class="line"> <span class="string">'2'</span>: &#123;<span class="string">'post'</span>: <span class="string">'This is the second blog post.'</span>&#125;,</div><div class="line"> <span class="string">'3'</span>: &#123;<span class="string">'post'</span>: <span class="string">'This is the third blog post.'</span>&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">var SERVER_PORT = <span class="number">9999</span>; <span class="comment">// 端口</span></div><div class="line">var serverapp = express();</div><div class="line">serverapp.use(express.<span class="keyword">static</span>(__dirname));</div><div class="line"><span class="comment">// 请求路由，和响应函数</span></div><div class="line">serverapp.get(<span class="string">'/api/posts'</span>, function(req, res) &#123;</div><div class="line">    res.json(POSTS);</div><div class="line">&#125;);</div><div class="line"><span class="comment">// 监听端口</span></div><div class="line">serverapp.listen(SERVER_PORT, function() &#123;</div><div class="line">    console.log(<span class="string">'Started server at http://127.0.0.1:'</span> + SERVER_PORT);</div><div class="line">&#125;);</div><div class="line"></div></pre></td></tr></table></figure><br><br>浏览器打开<a href="http://127.0.0.1:9999/api/posts" target="_blank" rel="external">http://127.0.0.1:9999/api/posts</a> 会返回POSTS数据。<br><br>下一步在同一个域下，建立一个静态页面，在加载页面时候请求API，显示到页面上,<br>hello.html:<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>ajax request<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></div><div class="line">        .post &#123;margin-bottom: 20px;&#125;</div><div class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">onload</span>=<span class="string">"getBlogPosts();"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"output"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></div><div class="line">        // 建立一个XMLHttpRequest对象 并打开链接</div><div class="line">        var createXhr = function(method, url) &#123;</div><div class="line">            var xhr = new XMLHttpRequest();</div><div class="line">            xhr.onerror = function() &#123;</div><div class="line">                document.getElementById('output').innerHTML = 'ERROR';</div><div class="line">            &#125;;</div><div class="line">            xhr.open(method, url, true);</div><div class="line">            return xhr;</div><div class="line">        &#125;;</div><div class="line"></div><div class="line">        var getBlogPosts = function() &#123;</div><div class="line">            var xhr = createXhr("GET", "http://127.0.0.1:9999/api/posts");</div><div class="line"></div><div class="line">            // 得到请求数据，并显示到页面上</div><div class="line">            xhr.onload = function() &#123;</div><div class="line">                var data = JSON.parse(xhr.responseText);</div><div class="line">                var elem = document.getElementById('output');</div><div class="line"></div><div class="line">                for (var postId in data) &#123;</div><div class="line">                    var postText = data[postId]['post'];</div><div class="line">                    var div = document.createElement('div');</div><div class="line">                    div.className = 'post';</div><div class="line">                    div.appendChild(document.createTextNode(postText));</div><div class="line">                    elem.appendChild(div);</div><div class="line">                &#125;</div><div class="line">            &#125;;</div><div class="line">            xhr.send();</div><div class="line">        &#125;;</div><div class="line"></div><div class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure><br><br>打开<a href="http://127.0.0.1:9999/hello.html会发现，同源的Ajax请求是正常的。" target="_blank" rel="external">http://127.0.0.1:9999/hello.html会发现，同源的Ajax请求是正常的。</a><br><br>现在，复制一份代码，新的代码换到8888端口，开启两个服务，从8888端口的hello.html请求<br>9999的API服务，发现是会报错的：<br><br><img src="ERROR1.png" alt="跨域错误"><br><br>注意：一定是通过浏览器访问的，而且服务端返回的状态码是200，但是还是没法显示出来内容。<br><br>从8888端口请求9999端口的API，会带有一个Origin的HTTP请求头:<br><br>Origin:<a href="http://127.0.0.1:8888" target="_blank" rel="external">http://127.0.0.1:8888</a><br>表示自己的域<br><br>由于没有设置跨域许可，所以不能正确得到内容。<br><br>现在修改9999端口的服务代码，如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">var express = require(<span class="string">'express'</span>); <span class="comment">// 引入express框架</span></div><div class="line"></div><div class="line"><span class="comment">// 数据</span></div><div class="line">var POSTS = &#123;</div><div class="line"> <span class="string">'1'</span>: &#123;<span class="string">'post'</span>: <span class="string">'This is the first blog post.'</span>&#125;,</div><div class="line"> <span class="string">'2'</span>: &#123;<span class="string">'post'</span>: <span class="string">'This is the second blog post.'</span>&#125;,</div><div class="line"> <span class="string">'3'</span>: &#123;<span class="string">'post'</span>: <span class="string">'This is the third blog post.'</span>&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// 加入设置CORS的函数</span></div><div class="line">var handleCors = function(req, res, next) &#123;</div><div class="line">    <span class="comment">// *表示允许任何域来请求数据，可以对特定的域进行设置</span></div><div class="line">    res.set(<span class="string">'Access-Control-Allow-Origin'</span>,<span class="string">"*"</span>);</div><div class="line">    next();</div><div class="line">&#125;</div><div class="line"></div><div class="line">var SERVER_PORT = <span class="number">9999</span>; <span class="comment">// 端口</span></div><div class="line">var serverapp = express();</div><div class="line">serverapp.use(express.<span class="keyword">static</span>(__dirname));</div><div class="line"></div><div class="line">serverapp.use(handleCors); </div><div class="line"><span class="comment">// 请求路由，和响应函数</span></div><div class="line">serverapp.get(<span class="string">'/api/posts'</span>, function(req, res) &#123;</div><div class="line">    res.json(POSTS);</div><div class="line">&#125;);</div><div class="line"><span class="comment">// 监听端口</span></div><div class="line">serverapp.listen(SERVER_PORT, function() &#123;</div><div class="line">    console.log(<span class="string">'Started server at http://127.0.0.1:'</span> + SERVER_PORT);</div><div class="line">&#125;);</div></pre></td></tr></table></figure><br><br>再打开<a href="http://127.0.0.1:8888/hello.html" target="_blank" rel="external">http://127.0.0.1:8888/hello.html</a> 就可以了。<br><br>API的响应头如下:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Access-Control-Allow-Origin:*</div><div class="line">Connection:keep-alive</div><div class="line">Content-Length:<span class="number">134</span></div><div class="line">Content-Type:application/json; charset=utf-<span class="number">8</span></div><div class="line">Date:Wed, <span class="number">08</span> Feb <span class="number">2017</span> <span class="number">06</span>:<span class="number">44</span>:<span class="number">14</span> GMT</div><div class="line">ETag:W/<span class="string">"86-KZ6XaVbtcZMWONcZEw0BIg"</span></div><div class="line">X-Powered-By:Express</div></pre></td></tr></table></figure><br><br>这里多了一个Access-Control-Allow-Origin，表示跨域是允许的，浏览器看到这里，就不会拦截返回的内容了。<br><br>书中有提到个细节，那就是localhost和127.0.0.1是不同的域，所以它们之间是无法直接请求的。<br><br><h4>处理preflight请求</h4>
+
+<p>对于简单的GET请求，配置上对应域的Access-Control-Allow-Origin头就可以了，但是对于像<br>DELETE或者PUT这种请求，需要在发送真正的请求前发送preflight请求，用于询问服务端的许可。</p>
+<blockquote>
+<p>The browser asks for permissions by using what is called a preflight request. A<br>preflight request is a small request that is sent by the browser before the actual<br>request. It contains information like which HTTP method is used, as well as if any<br>custom HTTP headers are present. The preflight gives the server a chance to examine<br>what the actual request will look like before it’s made. The server can then indicate<br>whether the browser should send the actual request, or return an error to the<br>client without sending the request.</p>
+</blockquote>
+<p>浏览器请求许可的请求就是preflight请求。preflight请求在真正的请求之前被浏览器发送。<br>它包含了使用何种HTTP方法，以及目前是否含有订制的HTTP请求头。preflight请求给了服务端一个检查<br>将要发送的请求是何种样子的机会。服务端会表明，浏览器是否可以发送真正的请求，或者不让浏览器发送请求并<br>返回错误。</p>
+<h5>为什么需要preflight请求</h5>
+
+
+<blockquote>
+<p>The concept of a preflight was introduced to allow cross-origin requests to be made<br>without breaking existing servers that depend on the browser’s same-origin policy. If<br>the preflight hits a server that is CORS-enabled, the server knows what a preflight<br>request is and can respond appropriately. But if the preflight hits a server that doesn’t<br>know or doesn’t care about CORS, the server won’t send the correct preflight response,<br>and the actual request will never be sent. The preflight protects unsuspecting servers<br>from receiving cross-origin requests they may not want.</p>
+</blockquote>
+<p>preflight请求用来允许跨域，并且不破坏浏览器的同源策略。如果服务端设置了CORS许可，那么服务端<br>知道如何响应请求。但是如果服务端没有设置或者不关心CORS，那么就不能正确响应preflight请求。<br>那么真正的请求就不会被发送。preflight请求就保护了不想要接收跨域请求的服务器。</p>
+<p>加入preflight请求的CORS过程(来自原书):</p>
+<p><img src="preflight_request.png" alt="preflight_request"></p>
+<p>也就说，如果preflight请求不能被服务端正确响应，那么真实请求就不会发出。</p>
+<p>触发失败的preflight请求, 新增一个DELETE POST的方法：<br>hello.html如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html lang="en"&gt;</div><div class="line">&lt;head&gt;</div><div class="line">    &lt;meta charset="UTF-8"&gt;</div><div class="line">    &lt;title&gt;ajax request&lt;/title&gt;</div><div class="line">    &lt;style&gt;</div><div class="line">        .post &#123;margin-bottom: 20px;&#125;</div><div class="line">    &lt;/style&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body onload="getBlogPosts();"&gt;</div><div class="line">    &lt;div id="output"&gt;</div><div class="line">    &lt;/div&gt;</div><div class="line">    &lt;script&gt;</div><div class="line">        // 建立一个XMLHttpRequest对象 并打开链接</div><div class="line">        var createXhr = function(method, url) &#123;</div><div class="line">            var xhr = new XMLHttpRequest();</div><div class="line">            xhr.onerror = function() &#123;</div><div class="line">                document.getElementById('output').innerHTML = 'ERROR';</div><div class="line">            &#125;;</div><div class="line">            xhr.open(method, url, true);</div><div class="line">            return xhr;</div><div class="line">        &#125;;</div><div class="line"></div><div class="line">        var getBlogPosts = function() &#123;</div><div class="line">            var xhr = createXhr("GET", "http://127.0.0.1:9999/api/posts");</div><div class="line"></div><div class="line">            xhr.onload = function() &#123;</div><div class="line">                var data = JSON.parse(xhr.responseText);</div><div class="line">                var elem = document.getElementById('output');</div><div class="line"></div><div class="line">                for (var postId in data) &#123;</div><div class="line">                    var postText = data[postId]['post'];</div><div class="line">                    var div = document.createElement('div');</div><div class="line">                    div.className = 'post';</div><div class="line">                    div.id = 'postId' + postId;</div><div class="line">                    div.appendChild(document.createTextNode(postText));</div><div class="line"></div><div class="line">                    // 新增删除链接</div><div class="line">                    var a = document.createElement('a');</div><div class="line">                    a.innerHTML = 'Delete post #' + postId;</div><div class="line">                    a.href = "#";</div><div class="line">                    a.onclick = function(postId) &#123;</div><div class="line">                         return function() &#123;</div><div class="line">                            deletePost(postId);</div><div class="line">                         &#125;</div><div class="line">                    &#125;(postId);</div><div class="line"></div><div class="line">                    div.appendChild(document.createTextNode(' '));</div><div class="line">                    div.appendChild(a);</div><div class="line"></div><div class="line">                    elem.appendChild(div);</div><div class="line"></div><div class="line">                &#125;</div><div class="line">            &#125;;</div><div class="line">            xhr.send();</div><div class="line">        &#125;;</div><div class="line"></div><div class="line">        // 删除post的函数</div><div class="line">        var deletePost = function(postId) &#123;</div><div class="line">             var url = 'http://127.0.0.1:9999/api/posts/' + postId;</div><div class="line">             var xhr = createXhr('DELETE', url);</div><div class="line">             xhr.onload = function() &#123;</div><div class="line">                 // 响应码204的话 删除元素</div><div class="line">                 if (xhr.status == 204) &#123;</div><div class="line">                     var element = document.getElementById('postId' + postId);</div><div class="line">                     element.parentNode.removeChild(element);</div><div class="line">                 &#125;</div><div class="line">             &#125;;</div><div class="line">             xhr.send();</div><div class="line">        &#125;;</div><div class="line"></div><div class="line">    &lt;/script&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div><div class="line"></div></pre></td></tr></table></figure>
+<p>服务端添加delete的API:<br>index.js如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">var express = require(<span class="string">'express'</span>); <span class="comment">// 引入express框架</span></div><div class="line"></div><div class="line"><span class="comment">// 数据</span></div><div class="line">var POSTS = &#123;</div><div class="line"> <span class="string">'1'</span>: &#123;<span class="string">'post'</span>: <span class="string">'This is the first blog post.'</span>&#125;,</div><div class="line"> <span class="string">'2'</span>: &#123;<span class="string">'post'</span>: <span class="string">'This is the second blog post.'</span>&#125;,</div><div class="line"> <span class="string">'3'</span>: &#123;<span class="string">'post'</span>: <span class="string">'This is the third blog post.'</span>&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// 加入设置CORS的函数</span></div><div class="line">var handleCors = function(req, res, next) &#123;</div><div class="line">    res.set(<span class="string">'Access-Control-Allow-Origin'</span>,<span class="string">"*"</span>);</div><div class="line">    next();</div><div class="line">&#125;</div><div class="line"></div><div class="line">var SERVER_PORT = <span class="number">9999</span>; <span class="comment">// 端口</span></div><div class="line">var serverapp = express();</div><div class="line">serverapp.use(express.<span class="keyword">static</span>(__dirname));</div><div class="line"></div><div class="line">serverapp.use(handleCors); </div><div class="line"><span class="comment">// 请求路由，和响应函数</span></div><div class="line">serverapp.get(<span class="string">'/api/posts'</span>, function(req, res) &#123;</div><div class="line">    res.json(POSTS);</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">// 添加删除方法</span></div><div class="line"></div><div class="line">serverapp.delete(<span class="string">'/api/posts/:id'</span>, function(req, res) &#123;</div><div class="line">    delete POSTS[req.params.id];</div><div class="line">    res.status(<span class="number">204</span>).end();</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">// 监听端口</span></div><div class="line">serverapp.listen(SERVER_PORT, function() &#123;</div><div class="line">    console.log(<span class="string">'Started server at http://127.0.0.1:'</span> + SERVER_PORT);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>现在尝试跨域删除post，会报错:</p>
+<p><img src="delete_error.png" alt="跨域删除错误"></p>
+<p>大致的意思是 DELETE方法在preflight请求的Access-Control-Allow-Methods不被许可。</p>
+<h5>确认preflight请求</h5><br>区分preflight请求和一般的HTTP请求不同之处在于：<br>1.使用OPTIONS方法<br>2.有一个 Origin 请求头<br>3.有一个 Access-Control-Request-Method 请求头<br><br>&gt;A preflight request must be made via the HTTP OPTIONS method, which is defined by<br>the HTTP spec and isn’t specific to CORS. The HTTP spec (RFC2616) defines an<br>OPTIONS request as “a request for information about the communication options<br>available on the request/response chain.” This means that even before CORS, clients<br>could use the OPTIONS method to learn more about an endpoint. When used outside<br>of CORS, the OPTIONS method traditionally conveys which HTTP methods are<br>supported on a particular URL.<br><br>preflight请求必须通过OPTIONS方法进行。OPTIONS用于获知服务器端对跨源请求所支持 HTTP 方法，来查明这个跨站请求对于目的站点是不是安全可接受的。如果不能接受，就无需发送真正请求了。<br><br><h5>关于Access-Control-Request-Method请求头<br></h5>
+
+<p>这个请求头用于在确认preflight请求中，表示浏览器想要通过这个里面带有的方法请求资源，看服务端是否<br>接受，如果不接受就不用在发送真正请求了。</p>
+<p>现在修改服务端代码，使得它支持preflight请求：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">var express = require(<span class="string">'express'</span>); <span class="comment">// 引入express框架</span></div><div class="line"></div><div class="line"><span class="comment">// 数据</span></div><div class="line">var POSTS = &#123;</div><div class="line"> <span class="string">'1'</span>: &#123;<span class="string">'post'</span>: <span class="string">'This is the first blog post.'</span>&#125;,</div><div class="line"> <span class="string">'2'</span>: &#123;<span class="string">'post'</span>: <span class="string">'This is the second blog post.'</span>&#125;,</div><div class="line"> <span class="string">'3'</span>: &#123;<span class="string">'post'</span>: <span class="string">'This is the third blog post.'</span>&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// 判断是否是preflight请求</span></div><div class="line">var isPrefilght = function(req) &#123;</div><div class="line">    var isHttpOptions = req.method === <span class="string">'OPTIONS'</span>;</div><div class="line">    var hasOriginHeader = req.headers[<span class="string">'origin'</span>];</div><div class="line">    var hssRequestMethod = req.headers[<span class="string">'access-control-request-method'</span>];</div><div class="line">    <span class="keyword">return</span> isHttpOptions &amp;&amp; hasOriginHeader &amp;&amp; hssRequestMethod;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">// 加入设置CORS的函数</span></div><div class="line">var handleCors = function(req, res, next) &#123;</div><div class="line">    res.set(<span class="string">'Access-Control-Allow-Origin'</span>,<span class="string">"*"</span>);</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (isPrefilght(req)) &#123;</div><div class="line">        res.set(<span class="string">'Access-Control-Allow-Methods'</span>, <span class="string">'GET, DELETE'</span>);</div><div class="line">        console.log(<span class="string">'Got a Prefilght Requests.'</span>)</div><div class="line">        res.status(<span class="number">204</span>).end();</div><div class="line">        <span class="keyword">return</span> ;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    next();</div><div class="line">&#125;</div><div class="line"></div><div class="line">var SERVER_PORT = <span class="number">9999</span>; <span class="comment">// 端口</span></div><div class="line">var serverapp = express();</div><div class="line">serverapp.use(express.<span class="keyword">static</span>(__dirname));</div><div class="line"></div><div class="line">serverapp.use(handleCors); </div><div class="line"><span class="comment">// 请求路由，和响应函数</span></div><div class="line">serverapp.get(<span class="string">'/api/posts'</span>, function(req, res) &#123;</div><div class="line">    res.json(POSTS);</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">// 添加删除方法</span></div><div class="line"></div><div class="line">serverapp.delete(<span class="string">'/api/posts/:id'</span>, function(req, res) &#123;</div><div class="line">    delete POSTS[req.params.id];</div><div class="line">    res.status(<span class="number">204</span>).end();</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">// 监听端口</span></div><div class="line">serverapp.listen(SERVER_PORT, function() &#123;</div><div class="line">    console.log(<span class="string">'Started server at http://127.0.0.1:'</span> + SERVER_PORT);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>现在，跨域删除就可以顺利进行了：</p>
+<p><img src="options_ok.png" alt=""><br><img src="delete_ok.png" alt=""></p>
+<h5>Access-Control-Allow-Methods 响应头说明:</h5>
+
+<p>指明资源可以被请求的方式有哪些(一个或者多个). 这个响应头信息在客户端发出预检请求的时候会被返回。<br>在OPTIONS请求中返回，如果下次请求的方法在 Access-Control-Allow-Methods 中，说明可以发送真正请求了。</p>
+<h5>加入额外的HTTP头</h5>
+
+<p>hello.html:<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html lang="en"&gt;</div><div class="line">&lt;head&gt;</div><div class="line">    &lt;meta charset="UTF-8"&gt;</div><div class="line">    &lt;title&gt;ajax request&lt;/title&gt;</div><div class="line">    &lt;style&gt;</div><div class="line">        .post &#123;margin-bottom: 20px;&#125;</div><div class="line">    &lt;/style&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body onload="getBlogPosts();"&gt;</div><div class="line">    &lt;div id="output"&gt;</div><div class="line">    &lt;/div&gt;</div><div class="line">    &lt;script&gt;</div><div class="line">        // 建立一个XMLHttpRequest对象 并打开链接</div><div class="line">        var createXhr = function(method, url) &#123;</div><div class="line">            var xhr = new XMLHttpRequest();</div><div class="line">            xhr.onerror = function() &#123;</div><div class="line">                document.getElementById('output').innerHTML = 'ERROR';</div><div class="line">            &#125;;</div><div class="line">            xhr.open(method, url, true);</div><div class="line">            return xhr;</div><div class="line">        &#125;;</div><div class="line"></div><div class="line">        var getBlogPosts = function() &#123;</div><div class="line">            var xhr = createXhr("GET", "http://127.0.0.1:9999/api/posts");</div><div class="line"></div><div class="line">            xhr.onload = function() &#123;</div><div class="line">                var data = JSON.parse(xhr.responseText);</div><div class="line">                var elem = document.getElementById('output');</div><div class="line"></div><div class="line">                for (var postId in data) &#123;</div><div class="line">                    var postText = data[postId]['post'];</div><div class="line">                    var div = document.createElement('div');</div><div class="line">                    div.className = 'post';</div><div class="line">                    div.id = 'postId' + postId;</div><div class="line">                    div.appendChild(document.createTextNode(postText));</div><div class="line"></div><div class="line">                    // 新增删除链接</div><div class="line">                    var a = document.createElement('a');</div><div class="line">                    a.innerHTML = 'Delete post #' + postId;</div><div class="line">                    a.href = "#";</div><div class="line">                    a.onclick = function(postId) &#123;</div><div class="line">                         return function() &#123;</div><div class="line">                            deletePost(postId);</div><div class="line">                         &#125;</div><div class="line">                    &#125;(postId);</div><div class="line"></div><div class="line">                    div.appendChild(document.createTextNode(' '));</div><div class="line">                    div.appendChild(a);</div><div class="line"></div><div class="line">                    elem.appendChild(div);</div><div class="line"></div><div class="line">                &#125;</div><div class="line">            &#125;;</div><div class="line">            xhr.send();</div><div class="line">        &#125;;</div><div class="line"></div><div class="line">        // 删除post的函数</div><div class="line">        var deletePost = function(postId) &#123;</div><div class="line">             var url = 'http://127.0.0.1:9999/api/posts/' + postId;</div><div class="line">             var xhr = createXhr('DELETE', url);</div><div class="line">             // 加入自定义的请求头</div><div class="line">             xhr.setRequestHeader('Timezone-Offset',"hello");</div><div class="line"></div><div class="line">             xhr.onload = function() &#123;</div><div class="line">                 // 响应码204的话 删除元素</div><div class="line">                 if (xhr.status == 204) &#123;</div><div class="line">                     var element = document.getElementById('postId' + postId);</div><div class="line">                     element.parentNode.removeChild(element);</div><div class="line">                 &#125;</div><div class="line">             &#125;;</div><div class="line">             xhr.send();</div><div class="line">        &#125;;</div><div class="line"></div><div class="line">    &lt;/script&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure></p>
+<p>这样会出现以下错误:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">XMLHttpRequest cannot load http:<span class="comment">//127.0.0.1:9999/api/posts/3. </span></div><div class="line">Request header field Timezone-Offset is not allowed by Access-Control-Allow-Headers in preflight response.</div></pre></td></tr></table></figure></p>
+<p>说明这个请求头不被允许。</p>
+<p>修改服务端如下 在OPTIONS请求时候加入一个允许的头就可以了:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line">var express = require(<span class="string">'express'</span>); <span class="comment">// 引入express框架</span></div><div class="line"></div><div class="line"><span class="comment">// 数据</span></div><div class="line">var POSTS = &#123;</div><div class="line"> <span class="string">'1'</span>: &#123;<span class="string">'post'</span>: <span class="string">'This is the first blog post.'</span>&#125;,</div><div class="line"> <span class="string">'2'</span>: &#123;<span class="string">'post'</span>: <span class="string">'This is the second blog post.'</span>&#125;,</div><div class="line"> <span class="string">'3'</span>: &#123;<span class="string">'post'</span>: <span class="string">'This is the third blog post.'</span>&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// 判断是否是preflight请求</span></div><div class="line">var isPrefilght = function(req) &#123;</div><div class="line">    var isHttpOptions = req.method === <span class="string">'OPTIONS'</span>;</div><div class="line">    var hasOriginHeader = req.headers[<span class="string">'origin'</span>];</div><div class="line">    var hssRequestMethod = req.headers[<span class="string">'access-control-request-method'</span>];</div><div class="line">    <span class="keyword">return</span> isHttpOptions &amp;&amp; hasOriginHeader &amp;&amp; hssRequestMethod;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">// 加入设置CORS的函数</span></div><div class="line">var handleCors = function(req, res, next) &#123;</div><div class="line">    res.set(<span class="string">'Access-Control-Allow-Origin'</span>,<span class="string">"*"</span>);</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (isPrefilght(req)) &#123;</div><div class="line">        res.set(<span class="string">'Access-Control-Allow-Methods'</span>, <span class="string">'GET, DELETE'</span>);</div><div class="line">        <span class="comment">// 加入允许的请求头</span></div><div class="line">        res.set(<span class="string">'Access-Control-Allow-Headers'</span>, <span class="string">'Timezone-Offset'</span>);</div><div class="line">        console.log(<span class="string">'Got a Prefilght Requests.'</span>)</div><div class="line">        res.status(<span class="number">204</span>).end();</div><div class="line">        <span class="keyword">return</span> ;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    next();</div><div class="line">&#125;</div><div class="line"></div><div class="line">var SERVER_PORT = <span class="number">9999</span>; <span class="comment">// 端口</span></div><div class="line">var serverapp = express();</div><div class="line">serverapp.use(express.<span class="keyword">static</span>(__dirname));</div><div class="line"></div><div class="line">serverapp.use(handleCors); </div><div class="line"><span class="comment">// 请求路由，和响应函数</span></div><div class="line">serverapp.get(<span class="string">'/api/posts'</span>, function(req, res) &#123;</div><div class="line">    res.json(POSTS);</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">// 添加删除方法</span></div><div class="line"></div><div class="line">serverapp.delete(<span class="string">'/api/posts/:id'</span>, function(req, res) &#123;</div><div class="line">    delete POSTS[req.params.id];</div><div class="line">    res.status(<span class="number">204</span>).end();</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">// 监听端口</span></div><div class="line">serverapp.listen(SERVER_PORT, function() &#123;</div><div class="line">    console.log(<span class="string">'Started server at http://127.0.0.1:'</span> + SERVER_PORT);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<h5>Cookie和响应头</h5>
+
+<p>暂时没用得上，以后再了解。。。</p>
+<p>参考:<br><a href="http://www.w3school.com.cn/tiy/t.asp?f=ajax_post2" target="_blank" rel="external">http://www.w3school.com.cn/tiy/t.asp?f=ajax_post2</a><br><a href="http://www.netingcn.com/http-status-204.html" target="_blank" rel="external">http://www.netingcn.com/http-status-204.html</a><br><a href="http://www.laruence.com/2011/01/20/1844.html" target="_blank" rel="external">http://www.laruence.com/2011/01/20/1844.html</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access_control_CORS" target="_blank" rel="external">https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access_control_CORS</a></p>
+
+    </div>
+
+    
+
+    
+        <div class="post-tags">
+            <i class="fa fa-tags" aria-hidden="true"></i>
+            <a href="/tags/HTTP/">#HTTP</a>
+        </div>
+    
+
+    <!-- Comments -->
+    
+
+</div>
+        </section>
+
+    </div>
+</div>
+
+</div>
+
+<!-- Footer -->
+<div class="push"></div>
+
+<footer class="footer-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 footer-about">
+                <h2>About</h2>
+                <p>
+                    主题由 <a href="https://github.com/klugjo">Jonathan Klughertz</a> 开发设计
+                </p>
+            </div>
+            
+    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 recent-posts">
+        <h2>Recent Posts</h2>
+        <ul>
+            
+            <li>
+                <a class="footer-post" href="/2017/02/09/HTTP-204含义/">HTTP 204响应码</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2017/02/09/CORS学习笔记/">CORS入门笔记</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2017/01/25/体验Tcl语言/">体验Tcl语言</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2017/01/21/网络编程-基本概念/">网络编程-基本概念</a>
+            </li>
+            
+        </ul>
+    </div>
+
+
+
+            
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <ul class="list-inline footer-social-icons">
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="footer-copyright">
+                    由 Hexo <a href="http://www.codeblocq.com/">Jonathan Klughertz</a> 强力驱动
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- After footer scripts -->
+
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Tween Max -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenMax.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Custom JavaScript -->
+<script src="/js/main.js"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>
