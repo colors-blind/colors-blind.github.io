@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="Down On Life">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="John Doe">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="Mixin模式"/>
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="Down On Life" />
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="Color-Blind的笔记"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+    <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>Mixin模式 - Color-Blind的笔记</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Google Analytics -->
+    
+
+
+</head>
+
+
+<body>
+
+<div class="bg-gradient"></div>
+<div class="bg-pattern"></div>
+
+<!-- Menu -->
+<!--Menu Links and Overlay-->
+<div class="menu-bg">
+    <div class="menu-container">
+        <ul>
+            
+            <li class="menu-item">
+                <a href="/">
+                    Home
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/archives">
+                    Archives
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+<!--Hamburger Icon-->
+<nav>
+    <a href="#menu"></a>
+</nav>
+
+<div class="container">
+
+    <!-- Main Content -->
+    <div class="row">
+    <div class="col-sm-12">
+
+        <!--Title and Logo-->
+        <header>
+    <div class="logo">
+        <a href="/"><i class="logo-icon fa fa-cube" aria-hidden="true"></i></a>
+        
+    </div>
+</header>
+
+        <section class="main">
+            
+<div class="post">
+
+    <div class="post-header">
+        <h1 class="title">
+            <a href="/2017/02/13/Mixin模式/">
+                Mixin模式
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2017-02-13</span>
+            
+            <a href="#disqus_thread" class="comments">留言</a>
+            
+        </div>
+    </div>
+
+    <div class="content">
+
+        <!-- Gallery -->
+        
+
+        <!-- Post Content -->
+        <h2 id="了解Mixin模式"><a href="#了解Mixin模式" class="headerlink" title="了解Mixin模式"></a>了解Mixin模式</h2><a id="more"></a>
+<blockquote>
+<p>In object-oriented programming languages, a mixin is a class that contains methods for use by other classes without having to be the parent class of those other classes. How those other classes gain access to the mixin’s methods depends on the language. Mixins are sometimes described as being “included” rather than “inherited”.</p>
+</blockquote>
+<p>在面向对象程序语言中，mixin是一个类，这个类包含了一些其他类需要用的方法，但又不一定非要成为其他类的父类。<br>其他类如何获取mixin的方法取决于语言实现，Mixins有时候别成为”包含”而不是”继承”。</p>
+<blockquote>
+<p>Mixins encourage code reuse and can be used to avoid the inheritance ambiguity that multiple inheritance can cause (the “diamond problem”), or to work around lack of support for multiple inheritance in a language. A mixin can also be viewed as an interface with implemented methods. </p>
+</blockquote>
+<p>Mixins鼓励代码复用，可以避免含糊的多重继承，或者可以用于不支持多重继承的语言。mixin可以被视为接口已经实现的方法。</p>
+<p>历史</p>
+<blockquote>
+<p>Mixins first appeared in the Symbolics’ object-oriented Flavors system (developed by Howard Cannon), which was an approach to object-orientation used in Lisp Machine Lisp. The name was inspired by Steve’s Ice Cream Parlor in Somerville, Massachusetts. The owner of the ice cream shop offered a basic flavor of ice cream (vanilla, chocolate, etc.) and blended in a combination of extra items (nuts, cookies, fudge, etc.) and called the item a “mix-in”, his own trademarked term at the time.</p>
+</blockquote>
+<p>Mixins第一次出现在Symbolics的面向对象口味系统中,是一个在lisp机器中的近似面向对象的系统。名字是受了<br>Steve的冰淇淋店的启发。冰淇淋的店主售卖一个基本口味的冰淇淋，混搭坚果，饼干，软糖什么的，这个物品被称为mix-in。</p>
+<p>定义</p>
+<blockquote>
+<p>Mixins are a language concept that allows a programmer to inject some code into a class. Mixin programming is a style of software development, in which units of functionality are created in a class and then mixed in with other classes.</p>
+</blockquote>
+<p>Mixins是一个语言的概念，允许程序员将代码注入到一个类中。Mixin编程是一种软件开发模式，将单元内被创建的函数混搭到<br>其他类中。</p>
+<blockquote>
+<p>A mixin class acts as the parent class, containing the desired functionality. A subclass can then inherit or simply reuse this functionality, but not as a means of specialization. Typically, the mixin will export the desired functionality to a child class, without creating a rigid, single “is a” relationship. Here lies the important difference between the concepts of mixins and inheritance, in that the child class can still inherit all the features of the parent class, but, the semantics about the child “being a kind of” the parent need not be necessarily applied.</p>
+</blockquote>
+<p>一个mixin表现和父类差不多，包括需要的功能。子类可以继承或者简单复用功能，但是不一定要特别化。<br>通常，mixin会将功能输出给一个子类，不必建立一个死板的”is a”关系。这里说明mixins和继承的重大不同–<br>子类依旧可以继承父类的所有属性，但是，语义上，子类不一定要成为父类的类型。</p>
+<p>好处</p>
+<blockquote>
+<p>1.It provides a mechanism for multiple inheritance by allowing multiple classes to use the common functionality, but without the complex semantics of multiple inheritance.</p>
+</blockquote>
+<p>2.Code reusability: Mixins are useful when a programmer wants to share functionality between different classes. Instead of repeating the same code over and over again, the common functionality can simply be grouped into a mixin and then inherited into each class that requires it.</p>
+<p>3.Mixins allows inheritance and use of only the desired features from the parent class, not necessarily all of the features from the parent class.</p>
+<p>1.不需要语义上的多重继承；<br>2.代码复用性好；<br>3.可以隐藏父类的方法，可以不全部暴露给子类。</p>
+<blockquote>
+<p>Mixins only exist in multiple-inheritance languages.<br>Mixins只存在于多重继承的语言之中。</p>
+</blockquote>
+<p>Python Mixin举例<br>使用继承：</p>
+<p>实例一,单一父类继承:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ComparableMixin</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="string">"""This class has methods which use `&lt;=` and `==`,</span></div><div class="line">    but this class does NOT implement those methods."""</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__ne__</span><span class="params">(self, other)</span>:</span></div><div class="line">        <span class="keyword">return</span> <span class="keyword">not</span> (self == other)</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__lt__</span><span class="params">(self, other)</span>:</span></div><div class="line">        <span class="keyword">return</span> self &lt;= other <span class="keyword">and</span> (self != other)</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__gt__</span><span class="params">(self, other)</span>:</span></div><div class="line">        <span class="keyword">return</span> <span class="keyword">not</span> self &lt;= other</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__ge__</span><span class="params">(self, other)</span>:</span></div><div class="line">        <span class="keyword">return</span> self == other <span class="keyword">or</span> self &gt; other</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Integer</span><span class="params">(ComparableMixin)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, i)</span>:</span></div><div class="line">        self.i = i</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__le__</span><span class="params">(self, other)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.i &lt;= other.i</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__eq__</span><span class="params">(self, other)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.i == other.i</div><div class="line"></div><div class="line"><span class="keyword">assert</span> Integer(<span class="number">0</span>) &lt;  Integer(<span class="number">1</span>)</div><div class="line"><span class="keyword">assert</span> Integer(<span class="number">0</span>) != Integer(<span class="number">1</span>)</div><div class="line"><span class="keyword">assert</span> Integer(<span class="number">1</span>) &gt;  Integer(<span class="number">0</span>)</div><div class="line"><span class="keyword">assert</span> Integer(<span class="number">1</span>) &gt;= Integer(<span class="number">1</span>)</div><div class="line"></div><div class="line"><span class="comment"># It is possible to instantiate a mixin:</span></div><div class="line">o = ComparableMixin()</div></pre></td></tr></table></figure>
+<p>这个实例也能使用functools的total_ordering方法</p>
+<p>实例二，多重继承</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">HasMethod1</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">method</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> <span class="number">1</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">HasMethod2</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">method</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> <span class="number">2</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">UsesMethod10</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">usesMethod</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.method() + <span class="number">10</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">UsesMethod20</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">usesMethod</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.method() + <span class="number">20</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">C1_10</span><span class="params">(HasMethod1, UsesMethod10)</span>:</span> <span class="keyword">pass</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">C1_20</span><span class="params">(HasMethod1, UsesMethod20)</span>:</span> <span class="keyword">pass</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">C2_10</span><span class="params">(HasMethod2, UsesMethod10)</span>:</span> <span class="keyword">pass</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">C2_20</span><span class="params">(HasMethod2, UsesMethod20)</span>:</span> <span class="keyword">pass</span></div><div class="line"></div><div class="line"><span class="keyword">assert</span> C1_10().usesMethod() == <span class="number">11</span></div><div class="line"><span class="keyword">assert</span> C1_20().usesMethod() == <span class="number">21</span></div><div class="line"><span class="keyword">assert</span> C2_10().usesMethod() == <span class="number">12</span></div><div class="line"><span class="keyword">assert</span> C2_20().usesMethod() == <span class="number">22</span></div><div class="line"></div><div class="line"><span class="comment"># Nothing prevents implementing the method</span></div><div class="line"><span class="comment"># on the base class like in Definition 1:</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">C3_10</span><span class="params">(UsesMethod10)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">method</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> <span class="number">3</span></div><div class="line"></div><div class="line"><span class="keyword">assert</span> C3_10().usesMethod() == <span class="number">13</span></div></pre></td></tr></table></figure>
+<p>Python Mixin原理</p>
+<p>有两个类:<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; class foo:</div><div class="line">...     pass</div><div class="line">... </div><div class="line">&gt;&gt;&gt; foo.__bases__</div><div class="line">()</div><div class="line">&gt;&gt;&gt; class foobase:</div><div class="line">...     def hello(self):</div><div class="line">...         print "hello"</div><div class="line">... </div><div class="line"></div><div class="line">&gt;&gt;&gt; obj=foo()</div><div class="line">&gt;&gt;&gt; obj.hello()</div><div class="line">Traceback (most recent call last):</div><div class="line">  File "&lt;stdin&gt;", line 1, in &lt;module&gt;</div><div class="line">AttributeError: foo instance has no attribute 'hello'</div><div class="line">&gt;&gt;&gt; foo.__bases__ +=(foobase,)</div><div class="line">&gt;&gt;&gt; foo.__bases__</div><div class="line">(&lt;class __main__.foobase at 0x10153de88&gt;,)</div><div class="line">&gt;&gt;&gt; obj.hello()</div><div class="line">hello</div><div class="line"></div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>原理是，每个类都有一个bases属性，它是一个tuple，用来存放所有的基类。而且在运行中，可以动态改变。所以当我们向其中增加新的基类时，再次调用原来不存在的函数，由于基类中的函数已经存在了，所以这次成功了。</p>
+<p>在使用Mix-in技术时，如果原来的类中存在与Mix类中同名的函数，那么Mix类中的函数不会运行。使用getattr()和setattr()函数可以进行函数替换。</p>
+</blockquote>
+<p>注意事项:</p>
+<p>1.Mixin必须责任单一，如果有多个功能，那就写多个Mixin类；<br>2.Mixin不依赖于子类的实现；<br>3.子类即便没有继承这个Mixin类，也照样可以工作；<br>4.多重继承时候，Mixin类应该在基本的父类之前。</p>
+<p>关于第四点，可以进行如下实验：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">BaseClass</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Mixin1</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">print</span> <span class="string">"Mixin1"</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Mixin2</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">print</span> <span class="string">"Mixin2"</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span><span class="params">(BaseClass, Mixin1, Mixin2)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"></div><div class="line">obj = MyClass()</div><div class="line">obj.test() <span class="comment"># print out Mixin1, beuacuse in Python the class hierarchy is defined right to left</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span><span class="params">(Mixin2, Mixin1, BaseClass)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"></div><div class="line">obj = MyClass()</div><div class="line">obj.test() <span class="comment"># print out Mixin2</span></div><div class="line"></div></pre></td></tr></table></figure>
+<p>参考：<br><a href="https://en.wikipedia.org/wiki/Mixin" target="_blank" rel="external">https://en.wikipedia.org/wiki/Mixin</a><br><a href="http://stackoverflow.com/questions/533631/what-is-a-mixin-and-why-are-they-useful" target="_blank" rel="external">http://stackoverflow.com/questions/533631/what-is-a-mixin-and-why-are-they-useful</a><br><a href="http://wiki.woodpecker.org.cn/moin/IntroMixin" target="_blank" rel="external">http://wiki.woodpecker.org.cn/moin/IntroMixin</a><br><a href="https://www.ianlewis.org/en/mixins-and-python" target="_blank" rel="external">https://www.ianlewis.org/en/mixins-and-python</a></p>
+
+    </div>
+
+    
+
+    
+
+    <!-- Comments -->
+    
+
+</div>
+        </section>
+
+    </div>
+</div>
+
+</div>
+
+<!-- Footer -->
+<div class="push"></div>
+
+<footer class="footer-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 footer-about">
+                <h2>About</h2>
+                <p>
+                    主题由 <a href="https://github.com/klugjo">Jonathan Klughertz</a> 开发设计
+                </p>
+            </div>
+            
+    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 recent-posts">
+        <h2>Recent Posts</h2>
+        <ul>
+            
+            <li>
+                <a class="footer-post" href="/2017/02/13/Mixin模式/">Mixin模式</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2017/02/12/strings命令/">strings命令</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2017/02/09/HTTP-204含义/">HTTP 204响应码</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2017/02/09/CORS学习笔记/">CORS入门笔记</a>
+            </li>
+            
+        </ul>
+    </div>
+
+
+
+            
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <ul class="list-inline footer-social-icons">
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="footer-copyright">
+                    由 Hexo <a href="http://www.codeblocq.com/">Jonathan Klughertz</a> 强力驱动
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- After footer scripts -->
+
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Tween Max -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenMax.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Custom JavaScript -->
+<script src="/js/main.js"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>
