@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="Down On Life">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="John Doe">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="打码兔的HTTP接口封装"/>
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="Down On Life" />
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="Color-Blind的笔记"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+    <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>打码兔的HTTP接口封装 - Color-Blind的笔记</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Google Analytics -->
+    
+
+
+</head>
+
+
+<body>
+
+<div class="bg-gradient"></div>
+<div class="bg-pattern"></div>
+
+<!-- Menu -->
+<!--Menu Links and Overlay-->
+<div class="menu-bg">
+    <div class="menu-container">
+        <ul>
+            
+            <li class="menu-item">
+                <a href="/">
+                    Home
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/archives">
+                    Archives
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+<!--Hamburger Icon-->
+<nav>
+    <a href="#menu"></a>
+</nav>
+
+<div class="container">
+
+    <!-- Main Content -->
+    <div class="row">
+    <div class="col-sm-12">
+
+        <!--Title and Logo-->
+        <header>
+    <div class="logo">
+        <a href="/"><i class="logo-icon fa fa-cube" aria-hidden="true"></i></a>
+        
+    </div>
+</header>
+
+        <section class="main">
+            
+<div class="post">
+
+    <div class="post-header">
+        <h1 class="title">
+            <a href="/2017/02/15/打码兔的HTTP接口封装/">
+                打码兔的HTTP接口封装
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2017-02-15</span>
+            
+            <a href="#disqus_thread" class="comments">留言</a>
+            
+        </div>
+    </div>
+
+    <div class="content">
+
+        <!-- Gallery -->
+        
+
+        <!-- Post Content -->
+        <hr>
+<h2 id="封装打码兔的Python接口"><a href="#封装打码兔的Python接口" class="headerlink" title="封装打码兔的Python接口"></a>封装打码兔的Python接口</h2><a id="more"></a>
+<p><a href="http://wiki.dama2.com/index.php?n=ApiDoc.Http" target="_blank" rel="external">打码兔</a>是一个人工识别验证码的平台，识别率和速度都还不错，有各种语言的支持，也有HTTP接口。<br>基于Python的HTTP接口是Python3的，如果需要部署到Python2的环境中，可能需要更改代码。<br>为了省事，可以做成一个HTTP服务，同时，不用每台爬虫机器都部署一遍。</p>
+<p>其HTTP接口再 <a href="http://www.dama2.com/download/demo/damatuWeb-Python.zip" target="_blank" rel="external">这里</a></p>
+<p>修改代码damatuWeb.py,去掉一些无用函数，填好账号密码。</p>
+<p>使用Flask进行封装如下,配置文件settings.py如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">#coding=utf-8</span></div><div class="line"></div><div class="line">UPLOAD_FOLDER = <span class="string">'你的服务目录'</span></div><div class="line">ALLOWED_EXTENSIONS = set([<span class="string">'png'</span>,<span class="string">'jpg'</span>,<span class="string">'jpeg'</span>])</div><div class="line">USER = <span class="string">'你的账号'</span></div><div class="line">PASSWD = <span class="string">'你的密码'</span></div><div class="line"></div></pre></td></tr></table></figure>
+<p>服务端代码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#coding=utf-8</span></div><div class="line"></div><div class="line"><span class="comment"># 服务部署在 本机 上 端口为12345</span></div><div class="line"><span class="comment"># 需要Python3环境</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> os</div><div class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, request, redirect, url_for</div><div class="line"><span class="keyword">from</span> werkzeug <span class="keyword">import</span> secure_filename</div><div class="line"><span class="keyword">from</span> damatuWeb <span class="keyword">import</span> DamatuApi</div><div class="line"><span class="keyword">from</span> settings <span class="keyword">import</span> UPLOAD_FOLDER, ALLOWED_EXTENSIONS, USER, PASSWD</div><div class="line"></div><div class="line">app = Flask(__name__)</div><div class="line">app.config[<span class="string">'UPLOAD_FOLDER'</span>] = UPLOAD_FOLDER</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">allowed_file</span><span class="params">(filename)</span>:</span></div><div class="line"></div><div class="line">    <span class="string">"""</span></div><div class="line">        根据文件名判断是否允许的文件</div><div class="line">    """</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="string">'.'</span> <span class="keyword">in</span> filename <span class="keyword">and</span> \</div><div class="line">           filename.rsplit(<span class="string">'.'</span>, <span class="number">1</span>)[<span class="number">1</span>] <span class="keyword">in</span> ALLOWED_EXTENSIONS</div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">@app.route("/", methods=['GET', 'POST'])</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">()</span>:</span></div><div class="line"></div><div class="line">    <span class="string">"""</span></div><div class="line">        上传图片，交给打码兔打码，返回验证码</div><div class="line">        上传的图片以内网ip+png命名</div><div class="line">    """</div><div class="line"></div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        <span class="comment"># post方法</span></div><div class="line">        <span class="keyword">if</span> request.method == <span class="string">'POST'</span>:</div><div class="line">            file = request.files[<span class="string">'file'</span>]</div><div class="line">            <span class="keyword">if</span> file <span class="keyword">and</span> allowed_file(file.filename):</div><div class="line">                filename = secure_filename(file.filename)</div><div class="line">                file_l = os.path.join(app.config[<span class="string">'UPLOAD_FOLDER'</span>], filename)</div><div class="line">                res = file.save(file_l)</div><div class="line">                dmt = DamatuApi(USER, PASSWD)</div><div class="line">                <span class="keyword">try</span>:</div><div class="line">                    code = dmt.decode(file_l, <span class="number">200</span>)</div><div class="line">                    <span class="keyword">return</span> code</div><div class="line">                <span class="keyword">except</span> Exception <span class="keyword">as</span> error:</div><div class="line">                    <span class="keyword">return</span> error</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            <span class="comment"># 用于检测服务是否可用</span></div><div class="line">            <span class="keyword">return</span> <span class="string">"Server OK!"</span></div><div class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> error:</div><div class="line">        <span class="keyword">return</span> error</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    app.run(host=<span class="string">'0.0.0.0'</span>, port=<span class="number">12345</span>, debug=<span class="keyword">True</span>, threaded=<span class="keyword">True</span>)</div><div class="line"></div></pre></td></tr></table></figure></p>
+<p>使用时，需要安装下Python3，然后运行服务，调用接口，就能识别验证码了。</p>
+
+    </div>
+
+    
+
+    
+        <div class="post-tags">
+            <i class="fa fa-tags" aria-hidden="true"></i>
+            <a href="/tags/Spider/">#Spider</a>
+        </div>
+    
+
+    <!-- Comments -->
+    
+
+</div>
+        </section>
+
+    </div>
+</div>
+
+</div>
+
+<!-- Footer -->
+<div class="push"></div>
+
+<footer class="footer-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 footer-about">
+                <h2>About</h2>
+                <p>
+                    主题由 <a href="https://github.com/klugjo">Jonathan Klughertz</a> 开发设计
+                </p>
+            </div>
+            
+    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 recent-posts">
+        <h2>Recent Posts</h2>
+        <ul>
+            
+            <li>
+                <a class="footer-post" href="/2017/02/15/打码兔的HTTP接口封装/">打码兔的HTTP接口封装</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2017/02/13/Mixin模式/">Mixin模式</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2017/02/12/strings命令/">strings命令</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2017/02/09/HTTP-204含义/">HTTP 204响应码</a>
+            </li>
+            
+        </ul>
+    </div>
+
+
+
+            
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <ul class="list-inline footer-social-icons">
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="footer-copyright">
+                    由 Hexo <a href="http://www.codeblocq.com/">Jonathan Klughertz</a> 强力驱动
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- After footer scripts -->
+
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Tween Max -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenMax.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Custom JavaScript -->
+<script src="/js/main.js"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>
