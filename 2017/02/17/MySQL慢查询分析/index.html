@@ -20,7 +20,7 @@
 
     <!--Open Graph Title-->
     
-        <meta property="og:title" content="Hello_World"/>
+        <meta property="og:title" content="MySQL慢查询分析"/>
     
 
     <!--Open Graph Description-->
@@ -44,7 +44,7 @@
 
     <!-- Title -->
     
-    <title>Hello_World - Color-Blind的笔记</title>
+    <title>MySQL慢查询分析 - Color-Blind的笔记</title>
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
@@ -124,13 +124,13 @@
 
     <div class="post-header">
         <h1 class="title">
-            <a href="/2016/12/30/Hello-World/">
-                Hello_World
+            <a href="/2017/02/17/MySQL慢查询分析/">
+                MySQL慢查询分析
             </a>
         </h1>
         <div class="post-info">
             
-                <span class="date">2016-12-30</span>
+                <span class="date">2017-02-17</span>
             
             <a href="#disqus_thread" class="comments">留言</a>
             
@@ -143,8 +143,14 @@
         
 
         <!-- Post Content -->
-        <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#coding=utf-8</span></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    print(<span class="string">"Hello world!"</span>)</div><div class="line"></div></pre></td></tr></table></figure>
-<img src="/2016/12/30/Hello-World/hello_world.jpg" alt="This is an example image" title="This is an example image">
+        <h2 id="记录一次SQL优化"><a href="#记录一次SQL优化" class="headerlink" title="记录一次SQL优化"></a>记录一次SQL优化</h2><a id="more"></a>
+<p>MySQL出现CPU使用率高，IO很低，记录下分析过程：</p>
+<p>SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> </div><div class="line">    auh.id </div><div class="line">        <span class="keyword">from</span> admin_user_history <span class="keyword">as</span> auh, admin_user <span class="keyword">as</span> au </div><div class="line">            <span class="keyword">where</span> auh.<span class="string">`login_id`</span>=au.<span class="string">`login_id`</span> </div><div class="line">                <span class="keyword">order</span> <span class="keyword">by</span> auh.gmt_create </div><div class="line">                    <span class="keyword">desc</span> <span class="keyword">limit</span> <span class="number">0</span>,<span class="number">10</span>;</div></pre></td></tr></table></figure><br>执行计划如图：<br><img src="1.png" alt=""></p>
+<p>分析：可以看到两张表的数据并不多，对于join字段login_id，admin_user表<code>login_id</code> varchar(32) 包含索引KEY <code>idx_gmtC_loginId</code> (<code>gmt_create</code>,<code>login_id</code>)，admin_user表login_id varchar(128)无索引。由于admin_user没有用到所以所以执行计划的过程是先做39064*8291的数据join再排序，都是非常耗CPU的，根据测试一个会话一句SQL会用满一个核。。。</p>
+<p>解决: admin_user添加logdin_id索引</p>
+<p>执行计划：<br><img src="2.png" alt=""></p>
+<p>现在产生的数据量就很少了。</p>
+<p>经验：<br>在两个表关联时候，可能都要加上索引来优化。</p>
 
     </div>
 
@@ -153,7 +159,7 @@
     
         <div class="post-tags">
             <i class="fa fa-tags" aria-hidden="true"></i>
-            <a href="/tags/Nothing/">#Nothing</a>
+            <a href="/tags/MySQL/">#MySQL</a>
         </div>
     
 
