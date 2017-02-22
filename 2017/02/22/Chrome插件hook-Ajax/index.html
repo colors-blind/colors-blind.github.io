@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="Down On Life">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="John Doe">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="Chrome插件hook Ajax"/>
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="Down On Life" />
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="Color-Blind的笔记"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+    <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>Chrome插件hook Ajax - Color-Blind的笔记</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Google Analytics -->
+    
+
+
+</head>
+
+
+<body>
+
+<div class="bg-gradient"></div>
+<div class="bg-pattern"></div>
+
+<!-- Menu -->
+<!--Menu Links and Overlay-->
+<div class="menu-bg">
+    <div class="menu-container">
+        <ul>
+            
+            <li class="menu-item">
+                <a href="/">
+                    Home
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/archives">
+                    Archives
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+<!--Hamburger Icon-->
+<nav>
+    <a href="#menu"></a>
+</nav>
+
+<div class="container">
+
+    <!-- Main Content -->
+    <div class="row">
+    <div class="col-sm-12">
+
+        <!--Title and Logo-->
+        <header>
+    <div class="logo">
+        <a href="/"><i class="logo-icon fa fa-cube" aria-hidden="true"></i></a>
+        
+    </div>
+</header>
+
+        <section class="main">
+            
+<div class="post">
+
+    <div class="post-header">
+        <h1 class="title">
+            <a href="/2017/02/22/Chrome插件hook-Ajax/">
+                Chrome插件hook Ajax
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2017-02-22</span>
+            
+            <a href="#disqus_thread" class="comments">留言</a>
+            
+        </div>
+    </div>
+
+    <div class="content">
+
+        <!-- Gallery -->
+        
+
+        <!-- Post Content -->
+        <h2 id="如何Hook-Ajax请求"><a href="#如何Hook-Ajax请求" class="headerlink" title="如何Hook Ajax请求"></a>如何Hook Ajax请求</h2><a id="more"></a>
+<p>  现在很多网站都使用Ajax作为数据接口，这样其实也方便爬虫爬取数据，但是，如果站点对IP，访问频率做<br>了限制，或者网站定位就是搜索类，无法遍历完所有页面，或者是数据实时变化，无法预期的。这样就可能需要<br>直接在浏览器中模拟人的行为，对于这样的网站(使用Ajax作数据接口，有一定防范措施)<br>，如果我们可以通过hook得到Ajax请求，就可以搞定它的数据了。</p>
+<h4>0x00 单页面Web应用</h4>
+
+<p>  对于单页面的Web应用，在console中使用如下代码，就能在浏览器进行Ajax请求时候，得到返回内容，<br>然后在post给存储接口就好了:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">(function() &#123;</div><div class="line"></div><div class="line">    var origOpen = XMLHttpRequest.prototype.open;</div><div class="line">    </div><div class="line">    XMLHttpRequest.prototype.open = function() &#123;</div><div class="line">        <span class="comment">// console.log('request started!');</span></div><div class="line">        <span class="keyword">this</span>.addEventListener(<span class="string">'load'</span>, function() &#123;</div><div class="line">            console.log(<span class="keyword">this</span>.responseText); <span class="comment">// 得到Ajax的返回内容</span></div><div class="line">        &#125;);</div><div class="line">        origOpen.apply(<span class="keyword">this</span>, arguments);</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">&#125;)();</div><div class="line"></div></pre></td></tr></table></figure>
+<p>比如百度图片:</p>
+<p><img src="1.png" alt=""></p>
+<p>我们可以看到请求图片的路径，这段代码 直接使用了一个匿名函数，重写了Ajax请求的open方法，给load事件加上一个事件监听器，从而把内容得到:</p>
+<p><img src="2.png" alt=""></p>
+<p>对于单页面的Web应用，基本可以满足需求，但是如果翻页的话，每次翻页上一页的代码就失效了，<br>不可能每页都把这段代码复制进console中，还是需要使用类似Chrome插件的方式才能实现。</p>
+<h4>0x01 翻页Web应用</h4>
+
+<p>有了上面的代码，如果我们把它直接丢到Chrome插件的JS文件里面(官方叫Content Scripts)，发现是无法执行的，XMLHttpRequest.prototype.open 还是浏览器自身的代码。</p>
+<p>这样看来，就无法实现自动翻页，自动获取ajax请求内容了。</p>
+<p>Chrome官方说法如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Content scripts execute in a special environment called an isolated world.</div><div class="line"> They have access to the DOM of the page they are injected into, but not to any</div><div class="line">  JavaScript variables or functions created by the page. It looks to each </div><div class="line">  content script as if there is no other JavaScript executing on the page it is </div><div class="line">  running on. The same is true in reverse: JavaScript running on the page cannot</div><div class="line">  call any functions or access any variables defined by content scripts.</div></pre></td></tr></table></figure>
+<p>大意如下：</p>
+<p>Content scripts在一个叫做隔离区的特殊环境中执行，它可以读取宿主页面的DOM对象，但是无法改变宿主页面的JavaScript变量(包括函数)。看起来就像是每份Content scripts代码和页面其他JavaScript代码是隔开的一样。反过来也一样，宿主页面也无法改变Content scripts所定义的变量。</p>
+<p>但是，StackOverflow上的大神rogerdpack，给出了破解之道：</p>
+<p>既然隔离区存在，我们需要把想要的函数注入到宿主页面 （ I strongly recommend to inject all of your JS code in the page via adding a script tag），简单地说，就是通过script标签注入代码，让它成为宿主的一部分，就可以为所欲为了。</p>
+<p>大神给出了几种方法，这里使用第一种，也是最简单的方法:</p>
+<p>注入另外一个JS文件，让想要执行的函数成为宿主页面的一部分<br>script.js 文件，内容如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">var s = document.createElement(<span class="string">'script'</span>);</div><div class="line"><span class="comment">// <span class="doctag">TODO:</span> add "script.js" to web_accessible_resources in manifest.json</span></div><div class="line">s.src = chrome.extension.getURL(<span class="string">'script.js'</span>);</div><div class="line"><span class="comment">// s.onload = function() &#123;</span></div><div class="line"><span class="comment">//     this.remove();</span></div><div class="line"><span class="comment">// &#125;;</span></div><div class="line">(document.head || document.documentElement).appendChild(s);</div><div class="line"></div></pre></td></tr></table></figure></p>
+<p>通过script注入script.js代码…<br>这里不能把s.onload 这两行加上(和原贴不同)，加上可能导致ajax请求无法执行(至少我测试的网站是这样的)，然后manifest.json文件如下:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="string">"manifest_version"</span>: <span class="number">2</span>,</div><div class="line">    <span class="string">"name"</span>: <span class="string">"test"</span>,</div><div class="line">    <span class="string">"version"</span>: <span class="string">"1.0"</span>,</div><div class="line">    <span class="string">"description"</span>: <span class="string">"测试ajax hook..."</span>,</div><div class="line">    <span class="string">"content_scripts"</span>: [</div><div class="line">        &#123;</div><div class="line">            <span class="string">"matches"</span>: [<span class="string">"http://image.baidu.com/*"</span>],</div><div class="line">            <span class="string">"js"</span>: [<span class="string">"js/ajax.js"</span>]</div><div class="line">        &#125;</div><div class="line">    ],</div><div class="line">    <span class="string">"permissions"</span>: [</div><div class="line">        <span class="string">"http://image.baidu.com/*"</span></div><div class="line">    ],</div><div class="line">    <span class="string">"web_accessible_resources"</span> : [<span class="string">"script.js"</span>]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>需要加上”web_accessible_resources” : [“script.js”]这一行，script.js文件和manifest.json同一级目录即可。这样基本就完成了ajax hook的插件了，剩下就是把数据入库。</p>
+<p>其他方法就没有研究了，有人建议把大神的回答加入官方文档，看来确实有必要!!!</p>
+<p>这样的插件可以绕过登录，Cookie认证等一系列问题，只要写个简单的代码段定义好自动执行的逻辑。</p>
+<p>参考:<br><a href="http://stackoverflow.com/questions/9515704/building-a-chrome-extension-inject-code-in-a-page-using-a-content-script/9517879#9517879" target="_blank" rel="external">http://stackoverflow.com/questions/9515704/building-a-chrome-extension-inject-code-in-a-page-using-a-content-script/9517879#9517879</a><br><a href="http://stackoverflow.com/questions/10527625/google-chrome-extension-script-injections/10529675#10529675" target="_blank" rel="external">http://stackoverflow.com/questions/10527625/google-chrome-extension-script-injections/10529675#10529675</a><br><a href="http://stackoverflow.com/questions/5202296/add-a-hook-to-all-ajax-requests-on-a-page" target="_blank" rel="external">http://stackoverflow.com/questions/5202296/add-a-hook-to-all-ajax-requests-on-a-page</a></p>
+
+    </div>
+
+    
+
+    
+        <div class="post-tags">
+            <i class="fa fa-tags" aria-hidden="true"></i>
+            <a href="/tags/HTTP/">#HTTP</a>
+        </div>
+    
+
+    <!-- Comments -->
+    
+
+</div>
+        </section>
+
+    </div>
+</div>
+
+</div>
+
+<!-- Footer -->
+<div class="push"></div>
+
+<footer class="footer-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 footer-about">
+                <h2>About</h2>
+                <p>
+                    主题由 <a href="https://github.com/klugjo">Jonathan Klughertz</a> 开发设计
+                </p>
+            </div>
+            
+    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 recent-posts">
+        <h2>Recent Posts</h2>
+        <ul>
+            
+            <li>
+                <a class="footer-post" href="/2017/02/22/Chrome插件hook-Ajax/">Chrome插件hook Ajax</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2017/02/22/Python-slots/">Python __slots__</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2017/02/20/MySQL慢查询分析2/">MySQL慢查询分析二</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2017/02/17/MySQL慢查询分析/">MySQL慢查询分析</a>
+            </li>
+            
+        </ul>
+    </div>
+
+
+
+            
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <ul class="list-inline footer-social-icons">
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="footer-copyright">
+                    由 Hexo <a href="http://www.codeblocq.com/">Jonathan Klughertz</a> 强力驱动
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- After footer scripts -->
+
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Tween Max -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenMax.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Custom JavaScript -->
+<script src="/js/main.js"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>

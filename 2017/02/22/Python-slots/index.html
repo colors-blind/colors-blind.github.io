@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="Down On Life">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="John Doe">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="Python __slots__"/>
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="Down On Life" />
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="Color-Blind的笔记"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+    <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>Python __slots__ - Color-Blind的笔记</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Google Analytics -->
+    
+
+
+</head>
+
+
+<body>
+
+<div class="bg-gradient"></div>
+<div class="bg-pattern"></div>
+
+<!-- Menu -->
+<!--Menu Links and Overlay-->
+<div class="menu-bg">
+    <div class="menu-container">
+        <ul>
+            
+            <li class="menu-item">
+                <a href="/">
+                    Home
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/archives">
+                    Archives
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+<!--Hamburger Icon-->
+<nav>
+    <a href="#menu"></a>
+</nav>
+
+<div class="container">
+
+    <!-- Main Content -->
+    <div class="row">
+    <div class="col-sm-12">
+
+        <!--Title and Logo-->
+        <header>
+    <div class="logo">
+        <a href="/"><i class="logo-icon fa fa-cube" aria-hidden="true"></i></a>
+        
+    </div>
+</header>
+
+        <section class="main">
+            
+<div class="post">
+
+    <div class="post-header">
+        <h1 class="title">
+            <a href="/2017/02/22/Python-slots/">
+                Python __slots__
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2017-02-22</span>
+            
+            <a href="#disqus_thread" class="comments">留言</a>
+            
+        </div>
+    </div>
+
+    <div class="content">
+
+        <!-- Gallery -->
+        
+
+        <!-- Post Content -->
+        <h2 id="了解slots"><a href="#了解slots" class="headerlink" title="了解slots"></a>了解<strong>slots</strong></h2><a id="more"></a>
+<p><strong>slots</strong>可以用来限制对象的属性，如没有使用<strong>solt</strong>可以对对象添加任意属性，<br>属性被放置在对象的<strong>dict</strong>字典中，实例如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span><span class="params">(object)</span>:</span></div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name, age)</span>:</span></div><div class="line">        self.name = name</div><div class="line">        self.age = age</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__repr__</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.name + <span class="string">':'</span> + str(self.age)</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    p1 = Person(<span class="string">'tom'</span>, <span class="number">20</span>)</div><div class="line">    <span class="comment">#p1.com = 'baidu'</span></div><div class="line">    <span class="comment">#print p1.com</span></div><div class="line">    <span class="keyword">print</span> p1.__dict__</div><div class="line">    <span class="keyword">print</span> type(p1.__dict__)</div><div class="line">    <span class="keyword">print</span> p1.__dict__.__sizeof__()</div></pre></td></tr></table></figure>
+<p>运行结果如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;&apos;age&apos;: 20, &apos;name&apos;: &apos;tom&apos;&#125;</div><div class="line">&lt;type &apos;dict&apos;&gt;</div><div class="line">248</div></pre></td></tr></table></figure></p>
+<p>使用<strong>slots</strong>，用来限制对象的属性，此时，属性放置在一个<strong>slots</strong>的列表里面<br>实例如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#coding=utf-8</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span><span class="params">(object)</span>:</span></div><div class="line"></div><div class="line">    __slots__ = [<span class="string">'name'</span>, <span class="string">'age'</span>]</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name, age)</span>:</span></div><div class="line">        self.name = name</div><div class="line">        self.age = age</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__repr__</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.name + <span class="string">':'</span> + str(self.age)</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    p1 = Person(<span class="string">'tom'</span>, <span class="number">20</span>)</div><div class="line">    <span class="keyword">print</span> p1</div><div class="line">    <span class="comment"># 此时无法给对象添加其他属性</span></div><div class="line">    <span class="comment"># p1.com = 'baidu'</span></div><div class="line">    <span class="keyword">print</span> dir(p1)</div><div class="line">    <span class="keyword">print</span> p1.__slots__</div><div class="line">    <span class="keyword">print</span> type(p1.__slots__)</div><div class="line">    <span class="keyword">print</span> p1.__slots__.__sizeof__()</div><div class="line"></div></pre></td></tr></table></figure>
+<p>运行结果如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">tom:20</div><div class="line">[&apos;__class__&apos;, &apos;__delattr__&apos;, &apos;__doc__&apos;, &apos;__format__&apos;, &apos;__getattribute__&apos;, &apos;__hash__&apos;, &apos;__init__&apos;, &apos;__module__&apos;, &apos;__new__&apos;, &apos;__reduce__&apos;, &apos;__reduce_ex__&apos;, &apos;__repr__&apos;, &apos;__setattr__&apos;, &apos;__sizeof__&apos;, &apos;__slots__&apos;, &apos;__str__&apos;, &apos;__subclasshook__&apos;, &apos;age&apos;, &apos;name&apos;]</div><div class="line">[&apos;name&apos;, &apos;age&apos;]</div><div class="line">&lt;type &apos;list&apos;&gt;</div><div class="line">56</div></pre></td></tr></table></figure></p>
+<p>可以看出，使用<strong>slots</strong>的话，可以节省一些内存空间，适合大量的建立对象适合使用。<br>比如，在爬虫系统中，需要通过解析页面产生大量的中间url进行抓取，这时候，这种中间url的类<br>可以按照以下方式定义，从而节省些内存：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Link</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="string">"""Link objects represent an extracted link by the LinkExtractor."""</span></div><div class="line"> </div><div class="line">    __slots__ = [<span class="string">'url'</span>, <span class="string">'text'</span>, <span class="string">'fragment'</span>, <span class="string">'nofollow'</span>]</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, url, text=<span class="string">''</span>, fragment=<span class="string">''</span>, nofollow=False)</span>:</span></div><div class="line">        self.url = url</div><div class="line">        self.text = text</div><div class="line">        self.fragment = fragment</div><div class="line">        self.nofollow = nofollow</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__eq__</span><span class="params">(self, other)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.url == other.url <span class="keyword">and</span> self.text == other.text <span class="keyword">and</span> \</div><div class="line">            self.fragment == other.fragment <span class="keyword">and</span> self.nofollow == other.nofollow</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__hash__</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> hash(self.url) ^ hash(self.text) ^ hash(self.fragment) ^ hash(self.nofollow)</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__repr__</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> <span class="string">'Link(url=%r, text=%r, fragment=%r, nofollow=%r)'</span> % \</div><div class="line">            (self.url, self.text, self.fragment, self.nofollow)</div><div class="line"></div></pre></td></tr></table></figure>
+<p>参考：<br><a href="http://www.liaoxuefeng.com/wiki/001374738125095c955c1e6d8bb493182103fac9270762a000/0013868200605560b1bd3c660bf494282ede59fee17e781000" target="_blank" rel="external">http://www.liaoxuefeng.com/wiki/001374738125095c955c1e6d8bb493182103fac9270762a000/0013868200605560b1bd3c660bf494282ede59fee17e781000</a><br><a href="http://blog.jobbole.com/52420/" target="_blank" rel="external">http://blog.jobbole.com/52420/</a><br><a href="http://programtalk.com/vs2/?source=python/11662/scrapy/scrapy/link.py" target="_blank" rel="external">http://programtalk.com/vs2/?source=python/11662/scrapy/scrapy/link.py</a></p>
+
+    </div>
+
+    
+
+    
+        <div class="post-tags">
+            <i class="fa fa-tags" aria-hidden="true"></i>
+            <a href="/tags/Python/">#Python</a>
+        </div>
+    
+
+    <!-- Comments -->
+    
+
+</div>
+        </section>
+
+    </div>
+</div>
+
+</div>
+
+<!-- Footer -->
+<div class="push"></div>
+
+<footer class="footer-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 footer-about">
+                <h2>About</h2>
+                <p>
+                    主题由 <a href="https://github.com/klugjo">Jonathan Klughertz</a> 开发设计
+                </p>
+            </div>
+            
+    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 recent-posts">
+        <h2>Recent Posts</h2>
+        <ul>
+            
+            <li>
+                <a class="footer-post" href="/2017/02/22/Chrome插件hook-Ajax/">Chrome插件hook Ajax</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2017/02/22/Python-slots/">Python __slots__</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2017/02/20/MySQL慢查询分析2/">MySQL慢查询分析二</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2017/02/17/MySQL慢查询分析/">MySQL慢查询分析</a>
+            </li>
+            
+        </ul>
+    </div>
+
+
+
+            
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <ul class="list-inline footer-social-icons">
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="footer-copyright">
+                    由 Hexo <a href="http://www.codeblocq.com/">Jonathan Klughertz</a> 强力驱动
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- After footer scripts -->
+
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Tween Max -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenMax.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Custom JavaScript -->
+<script src="/js/main.js"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>
