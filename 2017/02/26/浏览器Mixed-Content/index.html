@@ -20,7 +20,7 @@
 
     <!--Open Graph Title-->
     
-        <meta property="og:title" content="Color-Blind的笔记"/>
+        <meta property="og:title" content="浏览器Mixed Content"/>
     
 
     <!--Open Graph Description-->
@@ -33,7 +33,7 @@
 
     <!--Type page-->
     
-        <meta property="og:type" content="website" />
+        <meta property="og:type" content="article" />
     
 
     <!--Page Cover-->
@@ -44,7 +44,7 @@
 
     <!-- Title -->
     
-    <title>Nothing - Color-Blind的笔记</title>
+    <title>浏览器Mixed Content - Color-Blind的笔记</title>
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
@@ -107,9 +107,7 @@
 <div class="container">
 
     <!-- Main Content -->
-    
-
-<div class="row">
+    <div class="row">
     <div class="col-sm-12">
 
         <!--Title and Logo-->
@@ -117,23 +115,68 @@
     <div class="logo">
         <a href="/"><i class="logo-icon fa fa-cube" aria-hidden="true"></i></a>
         
-            <h1 id="main-title" class="title">#Nothing</h1>
-        
     </div>
 </header>
 
-        <section class="main archive-container">
+        <section class="main">
             
-                <div class="archive-post">
-    <a href="/2016/12/30/Hello-World/">
-        <span class="archive-date">
-            Dec 2016
-        </span>
-        Hello_World
-    </a>
+<div class="post">
+
+    <div class="post-header">
+        <h1 class="title">
+            <a href="/2017/02/26/浏览器Mixed-Content/">
+                浏览器Mixed Content
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2017-02-26</span>
+            
+            <a href="#disqus_thread" class="comments">留言</a>
+            
+        </div>
+    </div>
+
+    <div class="content">
+
+        <!-- Gallery -->
+        
+
+        <!-- Post Content -->
+        <hr>
+<h2 id="浏览器Mixed-Content"><a href="#浏览器Mixed-Content" class="headerlink" title="浏览器Mixed Content"></a>浏览器Mixed Content</h2><a id="more"></a>
+<p>之前做了一个简单的Chrome插件，用于hook Ajax请求，从而拿到页面内容，可以用来爬取数据。<br>但是，当我服务端API配置好跨域规则，在一个HTTPS的网站准备实现时，却发现有一个错误：</p>
+<p><img src="1.png" alt=""></p>
+<p>Mixed Content，那么这又是个什么问题呢？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">如果HTTPS页面包括由普通明文HTTP连接加密的内容，那么连接只是被部分加密：非加密的内容可以被嗅探者入侵，</div><div class="line">并且可以被中间人攻击者修改，因此连接不再受到保护。当一个网页出现这种情况时，它被称为混合内容页面。</div></pre></td></tr></table></figure>
+<p>我们知道，使用HTTPS，有很多好处，加密啦，认证啦，什么什么的。那么浏览器(浏览器开发者)<br>就会想，如果你在一个HTTPS的页面中请求了一个HTTP的资源，就会有安全风险，<br>这就是Mixed Content错误的来源。</p>
+<p>这里我最感兴趣的是XMLHttpRequest，因为这个玩意可以执行指令，下面就试试能不能绕过这个Mixed Content</p>
+<p>Google之，发现需要以允许不安全的方式启动Chrome</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">open /Applications/Google\ Chrome.app --args --allow-running-insecure-content</div></pre></td></tr></table></figure>
+<p>下一步，启动一个简单的HTTP接口，用来接收Ajax请求，在Google的网站上，发送一个Ajax请求给这个接口,<br>然后点击右上角的图标：</p>
+<p><img src="2.png" alt=""></p>
+<p>选择加载不安全的脚本，然后页面会重载一次：</p>
+<p><img src="3.png" alt=""></p>
+<p>就可以绕过Mixed Content，但是自动化的实现绕过Mixed Content，貌似不可行。</p>
+<p>参考：<br><a href="https://developer.mozilla.org/zh-CN/docs/Security/MixedContent" target="_blank" rel="external">https://developer.mozilla.org/zh-CN/docs/Security/MixedContent</a><br><a href="https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content" target="_blank" rel="external">https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content</a><br><a href="http://stackoverflow.com/questions/18321032/how-to-get-chrome-to-allow-mixed-content---" target="_blank" rel="external">http://stackoverflow.com/questions/18321032/how-to-get-chrome-to-allow-mixed-content---</a></p>
+
+    </div>
+
+    
+
+    
+        <div class="post-tags">
+            <i class="fa fa-tags" aria-hidden="true"></i>
+            <a href="/tags/HTTP/">#HTTP</a>
+        </div>
+    
+
+    <!-- Comments -->
+    
+
 </div>
-            
         </section>
+
     </div>
 </div>
 
