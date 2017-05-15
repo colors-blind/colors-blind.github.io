@@ -20,7 +20,7 @@
 
     <!--Open Graph Title-->
     
-        <meta property="og:title" content="Color-Blind的笔记"/>
+        <meta property="og:title" content="MySQL Unknown table engine InnoDb 错误解决"/>
     
 
     <!--Open Graph Description-->
@@ -33,7 +33,7 @@
 
     <!--Type page-->
     
-        <meta property="og:type" content="website" />
+        <meta property="og:type" content="article" />
     
 
     <!--Page Cover-->
@@ -44,7 +44,7 @@
 
     <!-- Title -->
     
-    <title>Python - Color-Blind的笔记</title>
+    <title>MySQL Unknown table engine InnoDb 错误解决 - Color-Blind的笔记</title>
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
@@ -107,9 +107,7 @@
 <div class="container">
 
     <!-- Main Content -->
-    
-
-<div class="row">
+    <div class="row">
     <div class="col-sm-12">
 
         <!--Title and Logo-->
@@ -117,23 +115,59 @@
     <div class="logo">
         <a href="/"><i class="logo-icon fa fa-cube" aria-hidden="true"></i></a>
         
-            <h1 id="main-title" class="title">#Python</h1>
-        
     </div>
 </header>
 
-        <section class="main archive-container">
+        <section class="main">
             
-                <div class="archive-post">
-    <a href="/2017/02/22/Python-slots/">
-        <span class="archive-date">
-            Feb 2017
-        </span>
-        Python __slots__
-    </a>
+<div class="post">
+
+    <div class="post-header">
+        <h1 class="title">
+            <a href="/2017/05/15/MySQL-Unknown-table-engine-InnoDb-错误解决/">
+                MySQL Unknown table engine InnoDb 错误解决
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2017-05-15</span>
+            
+            <a href="#disqus_thread" class="comments">留言</a>
+            
+        </div>
+    </div>
+
+    <div class="content">
+
+        <!-- Gallery -->
+        
+
+        <!-- Post Content -->
+        <h2 id="MySQL错误排查"><a href="#MySQL错误排查" class="headerlink" title="MySQL错误排查"></a>MySQL错误排查</h2><a id="more"></a>
+<p>用了很久的一张表，突然插入数据时候报错，大概是Unknown table engine ‘InnoDb’。<br>但是之前一点问题都没有，于是尝试重启MySQL看是否能够解决，重启以后log中发现如下错误：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">170512 11:30:07  InnoDB: Error: cannot allocate 2147500032 bytes of</div><div class="line">InnoDB: memory with malloc! Total allocated memory</div><div class="line">InnoDB: by InnoDB 36878736 bytes. Operating system errno: 12</div><div class="line">InnoDB: Check if you should increase the swap file or</div><div class="line">InnoDB: ulimits of your operating system.</div><div class="line">InnoDB: On FreeBSD check you have compiled the OS with</div><div class="line">InnoDB: a big enough maximum process size.</div><div class="line">InnoDB: Note that in most 32-bit computers the process</div><div class="line">InnoDB: memory space is limited to 2 GB or 4 GB.</div><div class="line">InnoDB: We keep retrying the allocation for 60 seconds...</div><div class="line"></div></pre></td></tr></table></figure>
+<p>大意就是，无法分配那么多内存，系统错误码是12。</p>
+<p>于是，查看下目前使用的内存，发现有些无用的PhantomJS进程占用了过多的内存，kill掉之后，并把MySQL的<br>innodb_buffer_pool_size改小了点，就可以使用了，之前可能是由于服务中内存足够，所以没有启动问题导致的。</p>
+<p>参考链接：</p>
+<p><a href="http://blog.feehi.com/linux/132.html" target="_blank" rel="external">http://blog.feehi.com/linux/132.html</a><br><a href="http://myunix.blog.51cto.com/191254/1705495" target="_blank" rel="external">http://myunix.blog.51cto.com/191254/1705495</a><br><a href="http://blog.csdn.net/lxpbs8851/article/details/9250439" target="_blank" rel="external">http://blog.csdn.net/lxpbs8851/article/details/9250439</a><br><a href="http://blog.csdn.net/yang1982_0907/article/details/20123055" target="_blank" rel="external">http://blog.csdn.net/yang1982_0907/article/details/20123055</a></p>
+
+    </div>
+
+    
+
+    
+        <div class="post-tags">
+            <i class="fa fa-tags" aria-hidden="true"></i>
+            <a href="/tags/MySQL/">#MySQL</a>
+        </div>
+    
+
+    <!-- Comments -->
+    
+
 </div>
-            
         </section>
+
     </div>
 </div>
 
