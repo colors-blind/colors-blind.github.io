@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="Down On Life">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="John Doe">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="Python list comprehension 和 append"/>
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="Down On Life" />
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="Color-Blind的笔记"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+    <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>Python list comprehension 和 append - Color-Blind的笔记</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Google Analytics -->
+    
+
+
+</head>
+
+
+<body>
+
+<div class="bg-gradient"></div>
+<div class="bg-pattern"></div>
+
+<!-- Menu -->
+<!--Menu Links and Overlay-->
+<div class="menu-bg">
+    <div class="menu-container">
+        <ul>
+            
+            <li class="menu-item">
+                <a href="/">
+                    Home
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/archives">
+                    Archives
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+<!--Hamburger Icon-->
+<nav>
+    <a href="#menu"></a>
+</nav>
+
+<div class="container">
+
+    <!-- Main Content -->
+    <div class="row">
+    <div class="col-sm-12">
+
+        <!--Title and Logo-->
+        <header>
+    <div class="logo">
+        <a href="/"><i class="logo-icon fa fa-cube" aria-hidden="true"></i></a>
+        
+    </div>
+</header>
+
+        <section class="main">
+            
+<div class="post">
+
+    <div class="post-header">
+        <h1 class="title">
+            <a href="/2017/05/16/Python-list-comprehension-和-append/">
+                Python list comprehension 和 append
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2017-05-16</span>
+            
+            <a href="#disqus_thread" class="comments">留言</a>
+            
+        </div>
+    </div>
+
+    <div class="content">
+
+        <!-- Gallery -->
+        
+
+        <!-- Post Content -->
+        <hr>
+<h2 id="Python-list-comprehension-和-append"><a href="#Python-list-comprehension-和-append" class="headerlink" title="Python list comprehension 和 append"></a>Python list comprehension 和 append</h2><a id="more"></a>
+<p>最近有被问list comprehension 和一个列表不停地append哪个效率高，为什么？<br>表示没关注过(so sad)，因为感觉list comprehension在可读性上并不好，而且也无法在遍历时候<br>捕获异常，下来测试学习下，记录如下：</p>
+<p>测试1，是否list comprehension就比append快：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">()</span>:</span></div><div class="line">    <span class="string">"""Stupid test function"""</span></div><div class="line">    L = []</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100</span>):</div><div class="line">        L.append(i*<span class="number">2</span>)</div><div class="line">    <span class="keyword">return</span> L</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test2</span><span class="params">()</span>:</span></div><div class="line"></div><div class="line">    <span class="keyword">return</span> [i * <span class="number">2</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100</span>)]</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    <span class="keyword">import</span> timeit</div><div class="line">    print(timeit.timeit(<span class="string">"test()"</span>, setup=<span class="string">"from __main__ import test"</span>))</div><div class="line">    print(<span class="string">'------'</span>)</div><div class="line">    print(timeit.timeit(<span class="string">"test2()"</span>, setup=<span class="string">"from __main__ import test2"</span>))</div></pre></td></tr></table></figure><br>结果如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="number">16.2206947803</span></div><div class="line">------</div><div class="line"><span class="number">12.4496650696</span></div></pre></td></tr></table></figure><br>看来list comprehension确实比在一个列表上不停append要快。</p>
+<p>测试2，使用dis查看函数的字节码：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> dis</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">list_c</span><span class="params">(nums)</span>:</span></div><div class="line"></div><div class="line">    <span class="keyword">return</span> [i*<span class="number">2</span> <span class="keyword">for</span> i <span class="keyword">in</span> nums]</div><div class="line"></div><div class="line"><span class="keyword">print</span> <span class="string">'return [i*2 for i in nums]'</span></div><div class="line"></div><div class="line">dis.dis(list_c)</div><div class="line"></div><div class="line"><span class="keyword">print</span> <span class="string">'--------------'</span></div><div class="line"><span class="keyword">print</span> <span class="string">'--------------'</span></div><div class="line"><span class="keyword">print</span> <span class="string">'--------------'</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">append_list</span><span class="params">(nums)</span>:</span></div><div class="line"></div><div class="line">    alist = []</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> nums:</div><div class="line">        alist.append(i*<span class="number">2</span>)</div><div class="line">    <span class="keyword">return</span> alist</div><div class="line"></div><div class="line">dis.dis(append_list)</div></pre></td></tr></table></figure></p>
+<p>结果如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">return</span> [i*<span class="number">2</span> <span class="keyword">for</span> i <span class="keyword">in</span> nums]</div><div class="line">  <span class="number">5</span>           <span class="number">0</span> BUILD_LIST               <span class="number">0</span></div><div class="line">              <span class="number">3</span> LOAD_FAST                <span class="number">0</span> (nums)</div><div class="line">              <span class="number">6</span> GET_ITER            </div><div class="line">        &gt;&gt;    <span class="number">7</span> FOR_ITER                <span class="number">16</span> (to <span class="number">26</span>)</div><div class="line">             <span class="number">10</span> STORE_FAST               <span class="number">1</span> (i)</div><div class="line">             <span class="number">13</span> LOAD_FAST                <span class="number">1</span> (i)</div><div class="line">             <span class="number">16</span> LOAD_CONST               <span class="number">1</span> (<span class="number">2</span>)</div><div class="line">             <span class="number">19</span> BINARY_MULTIPLY     </div><div class="line">             <span class="number">20</span> LIST_APPEND              <span class="number">2</span></div><div class="line">             <span class="number">23</span> JUMP_ABSOLUTE            <span class="number">7</span></div><div class="line">        &gt;&gt;   <span class="number">26</span> RETURN_VALUE        </div><div class="line">--------------</div><div class="line">--------------</div><div class="line">--------------</div><div class="line"> <span class="number">17</span>           <span class="number">0</span> BUILD_LIST               <span class="number">0</span></div><div class="line">              <span class="number">3</span> STORE_FAST               <span class="number">1</span> (alist)</div><div class="line"></div><div class="line"> <span class="number">18</span>           <span class="number">6</span> SETUP_LOOP              <span class="number">31</span> (to <span class="number">40</span>)</div><div class="line">              <span class="number">9</span> LOAD_FAST                <span class="number">0</span> (nums)</div><div class="line">             <span class="number">12</span> GET_ITER            </div><div class="line">        &gt;&gt;   <span class="number">13</span> FOR_ITER                <span class="number">23</span> (to <span class="number">39</span>)</div><div class="line">             <span class="number">16</span> STORE_FAST               <span class="number">2</span> (i)</div><div class="line"></div><div class="line"> <span class="number">19</span>          <span class="number">19</span> LOAD_FAST                <span class="number">1</span> (alist)</div><div class="line">             <span class="number">22</span> LOAD_ATTR                <span class="number">0</span> (append)</div><div class="line">             <span class="number">25</span> LOAD_FAST                <span class="number">2</span> (i)</div><div class="line">             <span class="number">28</span> LOAD_CONST               <span class="number">1</span> (<span class="number">2</span>)</div><div class="line">             <span class="number">31</span> BINARY_MULTIPLY     </div><div class="line">             <span class="number">32</span> CALL_FUNCTION            <span class="number">1</span></div><div class="line">             <span class="number">35</span> POP_TOP             </div><div class="line">             <span class="number">36</span> JUMP_ABSOLUTE           <span class="number">13</span></div><div class="line">        &gt;&gt;   <span class="number">39</span> POP_BLOCK           </div><div class="line"></div><div class="line"> <span class="number">20</span>     &gt;&gt;   <span class="number">40</span> LOAD_FAST                <span class="number">1</span> (alist)</div><div class="line">             <span class="number">43</span> RETURN_VALUE </div><div class="line"></div></pre></td></tr></table></figure></p>
+<p>通过字节码，可以看出来，list comprehension的指令更少，不需要建立列表变量，同时，也就无需取变量，<br>更不需要调用list的append函数（调用函数需要维护stack信息），也就比append要快。</p>
+<p>以下是StackOverflow上某大神的回答：</p>
+<blockquote>
+<p>A list comprehension is usually a tiny bit faster than the precisely equivalent for loop (that actually builds a list), most likely because it doesn’t have to look up the list and its append method on every iteration. However, a list comprehension still does a bytecode-level loop:</p>
+<p>dis.dis(<the code="" object="" for="" `[x="" x="" in="" range(10)]`="">)<br> 1           0 BUILD_LIST               0<br>             3 LOAD_FAST                0 (.0)<br>             6 FOR_ITER                12 (to 21)<br>             9 STORE_FAST               1 (x)<br>            12 LOAD_FAST                1 (x)<br>            15 LIST_APPEND              2<br>            18 JUMP_ABSOLUTE            6<br>            21 RETURN_VALUE</the></p>
+<p>Using a list comprehension in place of a loop that doesn’t build a list, nonsensically accumulating a list of meaningless values and then throwing the list away, is often slower because of the overhead of creating and extending the list. List comprehensions aren’t magic that is inherently faster than a good old loop.</p>
+</blockquote>
+<p>查看Python的官方wiki的Loop页面，也有提到map和for loop中append的问题：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">newlist = []</div><div class="line"><span class="keyword">for</span> word <span class="keyword">in</span> oldlist:</div><div class="line">    newlist.append(word.upper())</div></pre></td></tr></table></figure><br>和：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">newlist = map(str.upper, oldlist)</div></pre></td></tr></table></figure><br>这里map要比for loop快，因为for loop是在解释器中执行的，而map则是编译好的C代码。</p>
+<p>测试代码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">()</span>:</span></div><div class="line">    <span class="string">"""Stupid test function"""</span></div><div class="line">    oldlist = <span class="string">'abcde'</span></div><div class="line">    newlist = []</div><div class="line">    <span class="keyword">for</span> word <span class="keyword">in</span> oldlist:</div><div class="line">        newlist.append(word.upper())</div><div class="line">    <span class="keyword">return</span> newlist</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test2</span><span class="params">()</span>:</span></div><div class="line">    oldlist = <span class="string">'abcde'</span></div><div class="line">    <span class="keyword">return</span> map(str.upper, oldlist)</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    <span class="keyword">import</span> timeit</div><div class="line">    print(timeit.timeit(<span class="string">"test()"</span>, setup=<span class="string">"from __main__ import test"</span>))</div><div class="line">    print(<span class="string">'------'</span>)</div><div class="line">    print(timeit.timeit(<span class="string">"test2()"</span>, setup=<span class="string">"from __main__ import test2"</span>))</div></pre></td></tr></table></figure><br>结果如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="number">3.65194892883</span></div><div class="line">------</div><div class="line"><span class="number">2.49910998344</span></div></pre></td></tr></table></figure></p>
+<p>参考：<br><a href="https://wiki.python.org/moin/PythonSpeed/PerformanceTips#Loops" target="_blank" rel="external">https://wiki.python.org/moin/PythonSpeed/PerformanceTips#Loops</a><br><a href="http://stackoverflow.com/questions/22108488/are-list-comprehensions-and-functional-functions-faster-than-for-loops" target="_blank" rel="external">http://stackoverflow.com/questions/22108488/are-list-comprehensions-and-functional-functions-faster-than-for-loops</a><br><a href="http://stackoverflow.com/questions/1247486/python-list-comprehension-vs-map" target="_blank" rel="external">http://stackoverflow.com/questions/1247486/python-list-comprehension-vs-map</a></p>
+
+    </div>
+
+    
+
+    
+        <div class="post-tags">
+            <i class="fa fa-tags" aria-hidden="true"></i>
+            <a href="/tags/Python/">#Python</a>
+        </div>
+    
+
+    <!-- Comments -->
+    
+
+</div>
+        </section>
+
+    </div>
+</div>
+
+</div>
+
+<!-- Footer -->
+<div class="push"></div>
+
+<footer class="footer-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 footer-about">
+                <h2>About</h2>
+                <p>
+                    主题由 <a href="https://github.com/klugjo">Jonathan Klughertz</a> 开发设计
+                </p>
+            </div>
+            
+    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 recent-posts">
+        <h2>Recent Posts</h2>
+        <ul>
+            
+            <li>
+                <a class="footer-post" href="/2017/05/16/Python-list-comprehension-和-append/">Python list comprehension</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2017/05/16/Python-all-用法/">Python __all__用法</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2017/05/15/MySQL-Unknown-table-engine-InnoDb-错误解决/">MySQL Unknown table engin</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2017/02/26/浏览器Mixed-Content/">浏览器Mixed Content</a>
+            </li>
+            
+        </ul>
+    </div>
+
+
+
+            
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <ul class="list-inline footer-social-icons">
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="footer-copyright">
+                    由 Hexo <a href="http://www.codeblocq.com/">Jonathan Klughertz</a> 强力驱动
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- After footer scripts -->
+
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Tween Max -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenMax.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Custom JavaScript -->
+<script src="/js/main.js"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>
