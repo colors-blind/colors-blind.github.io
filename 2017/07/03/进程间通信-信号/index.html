@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="Down On Life">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="John Doe">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="进程间通信--信号"/>
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="Down On Life" />
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="Color-Blind的笔记"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+    <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>进程间通信--信号 - Color-Blind的笔记</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Google Analytics -->
+    
+
+
+</head>
+
+
+<body>
+
+<div class="bg-gradient"></div>
+<div class="bg-pattern"></div>
+
+<!-- Menu -->
+<!--Menu Links and Overlay-->
+<div class="menu-bg">
+    <div class="menu-container">
+        <ul>
+            
+            <li class="menu-item">
+                <a href="/">
+                    Home
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/archives">
+                    Archives
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+<!--Hamburger Icon-->
+<nav>
+    <a href="#menu"></a>
+</nav>
+
+<div class="container">
+
+    <!-- Main Content -->
+    <div class="row">
+    <div class="col-sm-12">
+
+        <!--Title and Logo-->
+        <header>
+    <div class="logo">
+        <a href="/"><i class="logo-icon fa fa-cube" aria-hidden="true"></i></a>
+        
+    </div>
+</header>
+
+        <section class="main">
+            
+<div class="post">
+
+    <div class="post-header">
+        <h1 class="title">
+            <a href="/2017/07/03/进程间通信-信号/">
+                进程间通信--信号
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2017-07-03</span>
+            
+            <a href="#disqus_thread" class="comments">留言</a>
+            
+        </div>
+    </div>
+
+    <div class="content">
+
+        <!-- Gallery -->
+        
+
+        <!-- Post Content -->
+        <h2 id="进程间通信学习"><a href="#进程间通信学习" class="headerlink" title="进程间通信学习"></a>进程间通信学习</h2><a id="more"></a>
+<p>之前学习了使用管道作为进程间通信的方式。如果我们只是简单地想要通过一个进程向另一个进程发送<br>消息(最常见的场景就是kill另一个进程)，那么就可以通过信号来实现。</p>
+<h4>信号及信号来源</h4>
+
+<p>信号是在软件层次上对中断机制的一种模拟，在原理上，一个进程收到一个信号与处理器收到一个中断请求可以说是一样的。<br>信号是异步的，一个进程不必通过任何操作来等待信号的到达，事实上，进程也不知道信号到底什么时候到达。</p>
+<p>信号是进程间通信机制中唯一的异步通信机制，可以看作是异步通知，通知接收信号的进程有哪些事情发生了。<br>信号机制经过POSIX实时扩展后，功能更加强大，除了基本通知功能外，还可以传递附加信息。</p>
+<p>信号事件的发生有两个来源：硬件来源(比如我们按下了键盘或者其它硬件故障)；<br>软件来源，最常用发送信号的系统函数是kill, raise,<br>alarm和setitimer以及sigqueue函数，软件来源还包括一些非法运算等操作。</p>
+<h5>信号之Hello world</h5>
+
+<p>当一个进程收到一个信号时，其执行流程将被操作系统中断，以便调用信号处理程序。信号通过数字来辨识。<br>每个信号有默认的信号处理程序。例如，在终端按下Ctrl+C时，将发送一个中断信号，该信号的默认信号<br>处理程序将退出该程序。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;signal.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="comment">// 信号处理函数</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">singal_handler</span><span class="params">(<span class="keyword">int</span> singal)</span> </span>&#123;</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"Caught singal %d\t"</span>, singal);</div><div class="line">  <span class="keyword">if</span> (singal == SIGTSTP)</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"SIGSTTP (Ctrl+Z)"</span>);</div><div class="line">  <span class="keyword">else</span> <span class="keyword">if</span> (singal == SIGQUIT)</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"SIGQUIT"</span>);</div><div class="line">  <span class="keyword">else</span> <span class="keyword">if</span> (singal == SIGTERM)</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"SIGTERM"</span>);</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"\n"</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 单独注册SIGINT，按下Ctrl+C 退出</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">sigint_handler</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"Caught a Ctrl+C (SIGINT) in a handler, exit..."</span>);</div><div class="line">  <span class="built_in">exit</span>(<span class="number">0</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">  signal(SIGINT, sigint_handler);</div><div class="line">  signal(SIGTERM, singal_handler);</div><div class="line"></div><div class="line">  <span class="keyword">while</span> (<span class="number">1</span>) &#123;</div><div class="line">    ;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div></pre></td></tr></table></figure>
+<p>这个程序会运行一个死循环，然后使用signal函数对注册的信号变量进行处理，比如kill 进程号，<br>就会打印出 Caught singal 15  SIGTERM 。</p>
+<h4>二、信号的种类</h4>
+
+<p>可以从两个不同的分类角度对信号进行分类：（1）可靠性方面：可靠信号与不可靠信号；（2）与时间的关系上：实时信号与非实时信号。</p>
+<h5>1、可靠信号与不可靠信号</h5>
+
+<h6>“不可靠信号”</h6>
+
+<p>Linux信号机制基本上是从Unix系统中继承过来的。早期Unix系统中的信号机制比较简单和原始，<br>后来在实践中暴露出一些问题，因此，把那些建立在早期机制上的信号叫做”不可靠信号”，<br>信号值小于SIGRTMIN(Red hat 7.2中，SIGRTMIN=32，SIGRTMAX=63)<br>的信号都是不可靠信号。这就是”不可靠信号”的来源。它的主要问题是：</p>
+<ul>
+<li><p>进程每次处理信号后，就将对信号的响应设置为默认动作。在某些情况下，将导致对信号的错误处理；<br>因此，用户如果不希望这样的操作，那么就要在信号处理函数结尾再一次调用signal()，重新安装该信号。</p>
+</li>
+<li><p>信号可能丢失，后面将对此详细阐述。<br>因此，早期unix下的不可靠信号主要指的是进程可能对信号做出错误的反应以及信号可能丢失。</p>
+</li>
+</ul>
+<p>Linux支持不可靠信号，但是对不可靠信号机制做了改进：在调用完信号处理函数后，<br>不必重新调用该信号的安装函数（信号安装函数是在可靠机制上的实现）。<br>因此，Linux下的不可靠信号问题主要指的是信号可能丢失。</p>
+<h6>“可靠信号”</h6>
+
+<p>随着时间的发展，实践证明了有必要对信号的原始机制加以改进和扩充。<br>所以，后来出现的各种Unix版本分别在这方面进行了研究，力图实现”可靠信号”。<br>由于原来定义的信号已有许多应用，不好再做改动。<br>最终只好又新增加了一些信号，并在一开始就把它们定义为可靠信号，这些信号支持排队，不会丢失。<br>同时，信号的发送和安装也出现了新版本：信号发送函数sigqueue()及信号安装函数sigaction()。<br>POSIX.4对可靠信号机制做了标准化。但是，POSIX只对可靠信号机制应具有的功能以及信号机制的对外接口做了标准化，对信号机制的实现没有作具体的规定。</p>
+<p>信号值位于SIGRTMIN和SIGRTMAX之间的信号都是可靠信号，可靠信号克服了信号可能丢失的问题。<br>Linux在支持新版本的信号安装函数sigation()以及信号发送函数sigqueue()的同时，<br>仍然支持早期的signal()信号安装函数，支持信号发送函数kill()。</p>
+<p>注：不要有这样的误解：由sigqueue()发送、sigaction()安装的信号就是可靠的。<br>事实上，可靠信号是指后来添加的新信号（信号值位于SIGRTMIN及SIGRTMAX之间;不可靠信号是信号值小于SIGRTMIN的信号。信号的可靠与不可靠只与信号值有关，与信号的发送及安装函数无关。<br>目前linux中的signal()是通过sigation()函数实现的，因此，即使通过signal()安装的信号，在信号处理函数的结尾也不必再调用一次信号安装函数。<br>同时，由signal()安装的实时信号支持排队，同样不会丢失。</p>
+<p>所以，我们之前的Hello world程序就没有再次安装函数。</p>
+<p>对于目前linux的两个信号安装函数:signal()及sigaction()来说，<br>它们都不能把SIGRTMIN以前的信号变成可靠信号（都不支持排队，仍有可能丢失，仍然是不可靠信号），<br>而且，对SIGRTMIN以后的信号都支持排队。<br>这两个函数的最大区别在于，经过sigaction安装的信号都能传递信息给信号处理函数（对所有信号这一点都成立），<br>而经过signal安装的信号却不能向信号处理函数传递信息。对于信号发送函数来说也是一样的。</p>
+<p>所以，signal函数第二个参数的函数，只有一个参数？</p>
+<h5>2.实时信号与非实时信号</h5>
+
+<p>早期Unix系统只定义了32种信号，Ret hat7.2支持64种信号，编号0-63(SIGRTMIN=31，SIGRTMAX=63)，<br>将来可能进一步增加，这需要得到内核的支持。<br>前32种信号已经有了预定义值，每个信号有了确定的用途及含义，并且每种信号都有各自的缺省动作。<br>如按键盘的CTRL ^C时，会产生SIGINT信号，对该信号的默认反应就是进程终止。<br>后32个信号表示实时信号，等同于前面阐述的可靠信号。<br>这保证了发送的多个实时信号都被接收。实时信号是POSIX标准的一部分，可用于应用进程。</p>
+<p>非实时信号都不支持排队，都是不可靠信号；实时信号都支持排队，都是可靠信号。</p>
+<h5>三、进程对信号的响应</h5>
+
+<p>进程可以通过三种方式来响应一个信号：</p>
+<p>1.忽略信号，即对信号不做任何处理，其中，有两个信号不能忽略：SIGKILL及SIGSTOP；<br>2.捕捉信号。定义信号处理函数，当信号发生时，执行相应的处理函数；<br>3.执行缺省操作，Linux对每种信号都规定了默认操作。注意，进程对实时信号的缺省反应是进程终止。</p>
+<p>Linux究竟采用上述三种方式的哪一个来响应信号，取决于传递给相应API函数的参数。</p>
+<h5>四、信号的发送</h5>
+
+
+
+    </div>
+
+    
+
+    
+        <div class="post-tags">
+            <i class="fa fa-tags" aria-hidden="true"></i>
+            <a href="/tags/Linux/">#Linux</a>
+        </div>
+    
+
+    <!-- Comments -->
+    
+
+</div>
+        </section>
+
+    </div>
+</div>
+
+</div>
+
+<!-- Footer -->
+<div class="push"></div>
+
+<footer class="footer-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 footer-about">
+                <h2>About</h2>
+                <p>
+                    主题由 <a href="https://github.com/klugjo">Jonathan Klughertz</a> 开发设计
+                </p>
+            </div>
+            
+    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 recent-posts">
+        <h2>Recent Posts</h2>
+        <ul>
+            
+            <li>
+                <a class="footer-post" href="/2017/08/14/Vagrant-开发环境配置/">Vagrant 开发环境配置</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2017/07/03/进程间通信-信号/">进程间通信--信号</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2017/05/25/hackerrank-SQL语句练习/">hackerrank-SQL语句练习(Basic </a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2017/05/24/进程间通信-管道/">进程间通信--管道</a>
+            </li>
+            
+        </ul>
+    </div>
+
+
+
+            
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <ul class="list-inline footer-social-icons">
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="footer-copyright">
+                    由 Hexo <a href="http://www.codeblocq.com/">Jonathan Klughertz</a> 强力驱动
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- After footer scripts -->
+
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Tween Max -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenMax.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Custom JavaScript -->
+<script src="/js/main.js"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>

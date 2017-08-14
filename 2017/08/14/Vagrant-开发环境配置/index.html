@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="Down On Life">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="John Doe">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="Vagrant 开发环境配置"/>
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="Down On Life" />
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="Color-Blind的笔记"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+    <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>Vagrant 开发环境配置 - Color-Blind的笔记</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Google Analytics -->
+    
+
+
+</head>
+
+
+<body>
+
+<div class="bg-gradient"></div>
+<div class="bg-pattern"></div>
+
+<!-- Menu -->
+<!--Menu Links and Overlay-->
+<div class="menu-bg">
+    <div class="menu-container">
+        <ul>
+            
+            <li class="menu-item">
+                <a href="/">
+                    Home
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/archives">
+                    Archives
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+<!--Hamburger Icon-->
+<nav>
+    <a href="#menu"></a>
+</nav>
+
+<div class="container">
+
+    <!-- Main Content -->
+    <div class="row">
+    <div class="col-sm-12">
+
+        <!--Title and Logo-->
+        <header>
+    <div class="logo">
+        <a href="/"><i class="logo-icon fa fa-cube" aria-hidden="true"></i></a>
+        
+    </div>
+</header>
+
+        <section class="main">
+            
+<div class="post">
+
+    <div class="post-header">
+        <h1 class="title">
+            <a href="/2017/08/14/Vagrant-开发环境配置/">
+                Vagrant 开发环境配置
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2017-08-14</span>
+            
+            <a href="#disqus_thread" class="comments">留言</a>
+            
+        </div>
+    </div>
+
+    <div class="content">
+
+        <!-- Gallery -->
+        
+
+        <!-- Post Content -->
+        <h2 id="Vagrant-开发环境配置"><a href="#Vagrant-开发环境配置" class="headerlink" title="Vagrant 开发环境配置"></a>Vagrant 开发环境配置</h2><a id="more"></a>
+<p>Vagrant是一个使用ruby开发的用来构建虚拟开发环境的工具，基于VBox，主要用来模拟线上的系统环境，<br>避免开发环境和真实环境的差异导致代码运行异常。</p>
+<p>这里记录下安装完以后的一些配置和某些问题的修复。</p>
+<p>1.安装vagrant-timezone插件</p>
+<p>安装完vagrant以后(我使用的是CentOS 6.5)，通过ssh进入虚拟机会发现，使用date命令得到的时间不准，<br>这个问题可以通过vagrant-timezone插件解决。<br>先安装vagrant-timezone插件，命令如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vagrant plugin install vagrant-timezone</div></pre></td></tr></table></figure>
+<p>2.在使用vagrant调试前端JavaScript代码时会出现这种诡异的情况：莫名的多出来一些不能识别的字符，导致错误，<br>这个问题需要修改配置文件，使用NFS作为宿主机和虚拟机同步文件的方法。</p>
+<p>以下是我使用的配置文件示例：</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div></pre></td><td class="code"><pre><div class="line"> <span class="comment"># -*- mode: ruby -*-</span></div><div class="line"><span class="comment"># vi: set ft=ruby :</span></div><div class="line"></div><div class="line"><span class="comment"># All Vagrant configuration is done below. The "2" in Vagrant.configure</span></div><div class="line"><span class="comment"># configures the configuration version (we support older styles for</span></div><div class="line"><span class="comment"># backwards compatibility). Please don't change it unless you know what</span></div><div class="line"><span class="comment"># you're doing.</span></div><div class="line">Vagrant.configure(<span class="string">"2"</span>) <span class="keyword">do</span> <span class="params">|config|</span></div><div class="line">  <span class="comment"># The most common configuration options are documented and commented below.</span></div><div class="line">  <span class="comment"># For a complete reference, please see the online documentation at</span></div><div class="line">  <span class="comment"># https://docs.vagrantup.com.</span></div><div class="line">  <span class="keyword">if</span> Vagrant.has_plugin?(<span class="string">"vagrant-timezone"</span>)</div><div class="line">    config.timezone.value = <span class="string">"Asia/Shanghai"</span></div><div class="line">  <span class="keyword">end</span></div><div class="line"></div><div class="line">  <span class="comment"># Every Vagrant development environment requires a box. You can search for</span></div><div class="line">  <span class="comment"># boxes at https://atlas.hashicorp.com/search.</span></div><div class="line">  config.vm.box = <span class="string">"hermes"</span></div><div class="line">  <span class="comment"># config.ssh.username = 'admin'</span></div><div class="line">  <span class="comment"># config.ssh.password = 'admin'</span></div><div class="line">  <span class="comment"># config.ssh.insert_key = 'true'</span></div><div class="line"></div><div class="line">  <span class="comment"># Disable automatic box update checking. If you disable this, then</span></div><div class="line">  <span class="comment"># boxes will only be checked for updates when the user runs</span></div><div class="line">  <span class="comment"># `vagrant box outdated`. This is not recommended.</span></div><div class="line">  <span class="comment"># config.vm.box_check_update = false</span></div><div class="line"></div><div class="line">  <span class="comment"># Create a forwarded port mapping which allows access to a specific port</span></div><div class="line">  <span class="comment"># within the machine from a port on the host machine. In the example below,</span></div><div class="line">  <span class="comment"># accessing "localhost:8080" will access port 80 on the guest machine.</span></div><div class="line">  <span class="comment"># <span class="doctag">NOTE:</span> This will enable public access to the opened port</span></div><div class="line">  <span class="comment"># config.vm.network "forwarded_port", guest: 5050, host: 9999</span></div><div class="line">  <span class="comment"># config.vm.network "forwarded_port", guest: 8088, host: 8888</span></div><div class="line"></div><div class="line">  <span class="comment"># Create a forwarded port mapping which allows access to a specific port</span></div><div class="line">  <span class="comment"># within the machine from a port on the host machine and only allow access</span></div><div class="line">  <span class="comment"># via 127.0.0.1 to disable public access</span></div><div class="line">  <span class="comment"># config.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1"</span></div><div class="line"></div><div class="line">  <span class="comment"># Create a private network, which allows host-only access to the machine</span></div><div class="line">  <span class="comment"># using a specific IP.</span></div><div class="line">  config.vm.network <span class="string">"private_network"</span>, <span class="symbol">ip:</span> <span class="string">"11.11.11.11"</span></div><div class="line"></div><div class="line">  <span class="comment"># Create a public network, which generally matched to bridged network.</span></div><div class="line">  <span class="comment"># Bridged networks make the machine appear as another physical device on</span></div><div class="line">  <span class="comment"># your network.</span></div><div class="line">  <span class="comment"># config.vm.network "public_network"</span></div><div class="line"></div><div class="line">  <span class="comment"># Share an additional folder to the guest VM. The first argument is</span></div><div class="line">  <span class="comment"># the path on the host to the actual folder. The second argument is</span></div><div class="line">  <span class="comment"># the path on the guest to mount the folder. And the optional third</span></div><div class="line">  <span class="comment"># argument is a set of non-required options.</span></div><div class="line">  config.vm.synced_folder <span class="string">"/Users/leeyang/VBox/app"</span>, <span class="string">"/home/admin"</span>, <span class="symbol">type:</span> <span class="string">"nfs"</span></div><div class="line">  <span class="comment"># config.vm.synced_folder "/Users/leeyang/VBox/app", "/home/admin"</span></div><div class="line"></div><div class="line"></div><div class="line">  <span class="comment"># Provider-specific configuration so you can fine-tune various</span></div><div class="line">  <span class="comment"># backing providers for Vagrant. These expose provider-specific options.</span></div><div class="line">  <span class="comment"># Example for VirtualBox:</span></div><div class="line">  <span class="comment">#</span></div><div class="line">  config.vm.provider <span class="string">"virtualbox"</span> <span class="keyword">do</span> <span class="params">|vb|</span></div><div class="line">  <span class="comment">#   # Display the VirtualBox GUI when booting the machine</span></div><div class="line">  <span class="comment">#   vb.gui = true</span></div><div class="line">  <span class="comment">#</span></div><div class="line">  <span class="comment">#   # Customize the amount of memory on the VM:</span></div><div class="line">    vb.memory = <span class="string">"2000"</span></div><div class="line">  <span class="keyword">end</span></div><div class="line">  <span class="comment">#</span></div><div class="line">  <span class="comment"># View the documentation for the provider you are using for more</span></div><div class="line">  <span class="comment"># information on available options.</span></div><div class="line"></div><div class="line">  <span class="comment"># Define a Vagrant Push strategy for pushing to Atlas. Other push strategies</span></div><div class="line">  <span class="comment"># such as FTP and Heroku are also available. See the documentation at</span></div><div class="line">  <span class="comment"># https://docs.vagrantup.com/v2/push/atlas.html for more information.</span></div><div class="line">  <span class="comment"># config.push.define "atlas" do |push|</span></div><div class="line">  <span class="comment">#   push.app = "YOUR_ATLAS_USERNAME/YOUR_APPLICATION_NAME"</span></div><div class="line">  <span class="comment"># end</span></div><div class="line"></div><div class="line">  <span class="comment"># Enable provisioning with a shell script. Additional provisioners such as</span></div><div class="line">  <span class="comment"># Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the</span></div><div class="line">  <span class="comment"># documentation for more information about their specific syntax and use.</span></div><div class="line">  <span class="comment"># config.vm.provision "shell", inline: &lt;&lt;-SHELL</span></div><div class="line">  <span class="comment">#   apt-get update</span></div><div class="line">  <span class="comment">#   apt-get install -y apache2</span></div><div class="line">  <span class="comment"># SHELL</span></div><div class="line"><span class="keyword">end</span></div><div class="line"></div></pre></td></tr></table></figure> 
+<p>其中<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">config.vm.synced_folder <span class="string">"/Users/leeyang/VBox/app"</span>, <span class="string">"/home/admin"</span>, <span class="symbol">type:</span> <span class="string">"nfs"</span></div></pre></td></tr></table></figure></p>
+<p>这一行用来配置文件同步，<br>需要改成自己的路径，”/Users/leeyang/VBox/app” 是宿主机的路径，”/home/admin” 是虚拟机的路径</p>
+<p>参考：</p>
+<p>1.<a href="https://github.com/tmatilai/vagrant-timezone" target="_blank" rel="external">https://github.com/tmatilai/vagrant-timezone</a><br>2.<a href="https://stackoverflow.com/questions/17286790/shared-folder-with-vagrant-cause-invisible-characters-appending" target="_blank" rel="external">https://stackoverflow.com/questions/17286790/shared-folder-with-vagrant-cause-invisible-characters-appending</a></p>
+
+    </div>
+
+    
+
+    
+
+    <!-- Comments -->
+    
+
+</div>
+        </section>
+
+    </div>
+</div>
+
+</div>
+
+<!-- Footer -->
+<div class="push"></div>
+
+<footer class="footer-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 footer-about">
+                <h2>About</h2>
+                <p>
+                    主题由 <a href="https://github.com/klugjo">Jonathan Klughertz</a> 开发设计
+                </p>
+            </div>
+            
+    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 recent-posts">
+        <h2>Recent Posts</h2>
+        <ul>
+            
+            <li>
+                <a class="footer-post" href="/2017/08/14/Vagrant-开发环境配置/">Vagrant 开发环境配置</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2017/07/03/进程间通信-信号/">进程间通信--信号</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2017/05/25/hackerrank-SQL语句练习/">hackerrank-SQL语句练习(Basic </a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2017/05/24/进程间通信-管道/">进程间通信--管道</a>
+            </li>
+            
+        </ul>
+    </div>
+
+
+
+            
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <ul class="list-inline footer-social-icons">
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="footer-copyright">
+                    由 Hexo <a href="http://www.codeblocq.com/">Jonathan Klughertz</a> 强力驱动
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- After footer scripts -->
+
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Tween Max -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenMax.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Custom JavaScript -->
+<script src="/js/main.js"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>
